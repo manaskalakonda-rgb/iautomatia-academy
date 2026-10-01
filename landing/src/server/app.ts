@@ -100,7 +100,8 @@ export function createApp(options: AppOptions): express.Express {
     res.status(404).json({ message: "Not found" });
   });
 
-  if (options.publicDir) app.use(express.static(options.publicDir, { extensions: ["html"], maxAge: "1h" }));
+  // No long-lived caching: file names are not versioned, so browsers revalidate (ETag) and see edits right away.
+  if (options.publicDir) app.use(express.static(options.publicDir, { extensions: ["html"], maxAge: 0 }));
 
   // Malformed JSON and unexpected errors.
   app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
