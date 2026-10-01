@@ -247,7 +247,6 @@ img { max-width: 100%; display: block; }
 .audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .audience-card { background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
 .audience-card p { color: var(--muted); }
-.suggest { font-size: 0.88rem; color: var(--brand) !important; font-weight: 600; margin: 0; }
 
 /* ---------- Timeline ---------- */
 .timeline { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -547,4 +546,23 @@ button[disabled] { opacity: 0.7; cursor: progress; }
 }
 @media (prefers-reduced-motion: reduce) {
   .value-card:hover { transform: none; }
+}
+
+/* ---------- Who can join: label/value facts and CTA banner ---------- */
+.audience-facts { margin: 0; display: grid; gap: 4px; }
+.audience-facts dt {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--brand); margin-top: 10px;
+}
+.audience-facts dt:first-child { margin-top: 0; }
+.audience-facts dd { margin: 0; color: var(--text); }
+.audience-facts dd:first-of-type { font-weight: 600; color: var(--ink); }
+.audience-cta {
+  margin-top: 32px; padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  background: #fff; border: 1px dashed #a9c4e8; border-radius: var(--radius);
+}
+.audience-cta p { margin: 0; font-weight: 600; color: var(--ink); font-size: 1.05rem; }
+@media (max-width: 640px) {
+  .audience-cta { flex-direction: column; align-items: stretch; text-align: center; }
 }
