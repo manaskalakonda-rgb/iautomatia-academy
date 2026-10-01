@@ -1,7 +1,8 @@
 Put your photos in this folder with these exact names (.jpg, .jpeg, .png or .webp).
 The landing page shows them automatically in place of the placeholders.
 
-  hero-jaka-cobot   Top of page: JAKA cobot (currently the JAKA training-cell product image)
+  hero-jaka-cobot-cutout  Top of page: JAKA cobot cut out on a transparent background (WebP/PNG)
+  hero-jaka-cobot   JAKA training-cell product image on white (kept as a spare)
   jaka-cobot-cell   Lab section: JAKA 6-axis cobot cell with gripper
   plc-trainers      Lab section: Siemens / Mitsubishi / Allen-Bradley PLC trainer kits
   vision-sensor     Lab section: vision sensor over the pick area

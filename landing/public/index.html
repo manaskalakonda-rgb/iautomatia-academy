@@ -6,7 +6,8 @@
   <title>iAutomatia Academy Hyderabad | Hands-on Cobot & PLC Training</title>
   <meta name="description" content="Build job-ready industrial automation skills in 12 weeks with hands-on training on real JAKA cobots and Siemens, Mitsubishi and Allen-Bradley PLCs in Hyderabad." />
   <link rel="icon" type="image/png" href="assets/mark.png" />
-  <link rel="stylesheet" href="styles.css?v=20261001-4" />
+  <link rel="preload" href="assets/fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="styles.css?v=20261001-5" />
 </head>
 <body>
 
@@ -14,7 +15,7 @@
   <header class="site-header" id="top">
     <div class="container nav-wrap">
       <a href="#top" class="logo" aria-label="iAutomatia Academy home">
-        <img src="assets/logo.png" alt="iAutomatia" width="529" height="270" />
+        <img src="assets/logo-white.png" alt="iAutomatia" width="529" height="270" />
         <span class="logo-text"><strong>ACADEMY</strong><small>Learn. Build. Experience</small></span>
       </a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
@@ -26,6 +27,7 @@
         <a href="#tech">Lab</a>
         <a href="#projects">Projects</a>
         <a href="#programs">Programs</a>
+        <a href="#curriculum">Syllabus</a>
         <a href="#faq">FAQ</a>
         <a href="#enquire" class="btn btn-accent btn-sm">Book a Free Demo</a>
       </nav>
@@ -61,7 +63,7 @@
           </ul>
         </div>
         <div class="hero-media">
-          <div class="ph ph-hero" data-photo="hero-jaka-cobot" data-fit="contain" data-alt="JAKA 6-axis collaborative robot training cell with PLC control panel and teach pendant">
+          <div class="ph ph-hero" data-photo="hero-jaka-cobot-cutout" data-fit="contain" data-alt="JAKA 6-axis collaborative robot training cell with PLC control panel and teach pendant">
             <span class="ph-tag">Image placeholder</span>
             <span class="ph-label">PHOTO: Student programming a JAKA cobot with the teach pendant, PLC panel visible in background</span>
           </div>
@@ -87,7 +89,7 @@
               <span class="value-metric">100% Physical Setup</span>
             </div>
             <h3>Real Hardware</h3>
-            <p>Train on actual JAKA 6-axis cobots and industrial PLC panels&mdash;not virtual desktop software.</p>
+            <p>Train on physical JAKA cobots and PLC panels&mdash;not virtual software.</p>
           </article>
 
           <article class="value-card">
@@ -98,7 +100,7 @@
               <span class="value-metric">Max 4 Per Cell</span>
             </div>
             <h3>Small Batches</h3>
-            <p>Strictly capped at 12 students per batch. You get direct, unhurried hands-on time every day.</p>
+            <p>12 students | Max 4 per cobot cell.</p>
           </article>
 
           <article class="value-card">
@@ -109,7 +111,7 @@
               <span class="value-metric">3 Top Platforms</span>
             </div>
             <h3>Multi-Brand PLC</h3>
-            <p>Learn Siemens (TIA Portal), Mitsubishi (GX Works), and Allen-Bradley (Studio 5000) on real PLCs.</p>
+            <p>Siemens + Mitsubishi + Allen-Bradley.</p>
           </article>
 
           <article class="value-card">
@@ -120,7 +122,7 @@
               <span class="value-metric">Physical Capstone</span>
             </div>
             <h3>Real Projects</h3>
-            <p>Wire, program, and debug complete automation cells you can film and present to recruiters.</p>
+            <p>Wire, program, and debug complete automation cells.</p>
           </article>
 
           <article class="value-card">
@@ -131,7 +133,7 @@
               <span class="value-metric">Job Preparation</span>
             </div>
             <h3>Career Support</h3>
-            <p>Build a verified project portfolio, practice technical mock interviews, and get connected with hiring partners.</p>
+            <p>Portfolio + mock interviews + placement support.</p>
           </article>
         </div>
 
@@ -180,9 +182,12 @@
           </article>
         </div>
 
-        <div class="audience-cta">
-          <p>Not sure which program fits your background?</p>
-          <a href="#enquire" class="btn btn-accent">Attend a Free Demo</a>
+        <div class="cta-strip cta-accent">
+          <div>
+            <h3>Unsure which level is right for you?</h3>
+            <p>Talk to an instructor at a free demo &mdash; no commitment.</p>
+          </div>
+          <a href="#enquire" class="btn btn-dark btn-lg">Attend a Free Demo</a>
         </div>
       </div>
     </section>
@@ -271,11 +276,11 @@
       <div class="container">
         <p class="eyebrow">Hands-on projects</p>
         <h2>You don't just learn it. You build it.</h2>
-        <p class="section-lead">Every level ends with a working automation cell you build yourself.</p>
+        <p class="section-lead">Every level ends with a working automation cell &mdash; wired, programmed and debugged by students, on real hardware.</p>
 
         <div class="project-grid">
           <article class="project-card">
-            <span class="project-level">Foundation &middot; Week 4</span>
+            <div class="project-top"><span class="project-level">Foundation &middot; Week 4</span><span class="built-tag">Student-built</span></div>
             <h3>PLC-controlled cobot pick-and-place</h3>
             <ul class="ticks">
               <li>Ladder logic: start/stop, timers, interlocks</li>
@@ -284,7 +289,7 @@
             </ul>
           </article>
           <article class="project-card">
-            <span class="project-level">Integrator &middot; Week 8</span>
+            <div class="project-top"><span class="project-level">Integrator &middot; Week 8</span><span class="built-tag">Student-built</span></div>
             <h3>Vision-guided integrated work cell</h3>
             <ul class="ticks">
               <li>PLC &harr; cobot over Modbus TCP &amp; Profinet</li>
@@ -293,7 +298,7 @@
             </ul>
           </article>
           <article class="project-card project-capstone">
-            <span class="project-level">Specialist &middot; Weeks 10&ndash;12</span>
+            <div class="project-top"><span class="project-level">Specialist &middot; Weeks 10&ndash;12</span><span class="built-tag">Student-built</span></div>
             <h3>Capstone: complete automation cell</h3>
             <ul class="ticks">
               <li>Full cell build with a mentor</li>
@@ -346,7 +351,7 @@
             <p>Book a 30-minute lab tour to watch our JAKA cobots and PLC panels run live.</p>
             <a href="#enquire" class="btn btn-light btn-lg">Book Lab Tour &amp; Demo</a>
           </div>
-          <img class="cta-immersive-img" src="assets/photos/hero-jaka-cobot.jpg" alt="" width="1044" height="1194" loading="lazy" />
+          <img class="cta-immersive-img" src="assets/photos/hero-jaka-cobot-cutout.webp" alt="" width="929" height="1080" loading="lazy" />
         </div>
       </div>
     </section>
@@ -354,7 +359,7 @@
     <!-- =====================================================================
          5. PROGRAM – Pricing tiers + curriculum (progressive disclosure)
          ===================================================================== -->
-    <section class="section section-alt" id="programs">
+    <section class="section" id="programs">
       <div class="container">
         <p class="eyebrow">Programs &amp; fees</p>
         <h2>Three levels. Each one builds on the last.</h2>
@@ -371,13 +376,13 @@
               <li><strong>~80</strong><span>hours</span></li>
               <li><strong>1</strong><span>project</span></li>
             </ul>
+            <p class="outcome"><strong>Outcome:</strong> program a PLC and run a cobot pick-and-place safely.</p>
             <p class="program-for">Start here if you are new to PLCs and robots.</p>
             <ul class="ticks">
               <li>PLC basics: ladder logic, I/O, timers, counters</li>
               <li>Cobot safety &amp; teach pendant</li>
               <li>Basic pick-and-place on a real cobot</li>
             </ul>
-            <p class="outcome"><strong>Outcome:</strong> program a PLC and run a cobot pick-and-place safely.</p>
             <a href="#enquire" class="btn btn-ghost btn-block" data-program="Foundation">Enquire about Foundation</a>
           </article>
 
@@ -391,6 +396,7 @@
               <li><strong>~160</strong><span>hours</span></li>
               <li><strong>2</strong><span>projects</span></li>
             </ul>
+            <p class="outcome"><strong>Outcome:</strong> integrate PLC, HMI, vision and cobot into one working system.</p>
             <p class="program-for">Everything in Foundation, plus:</p>
             <ul class="ticks">
               <li>PLC&ndash;cobot over Modbus TCP &amp; Profinet</li>
@@ -398,7 +404,6 @@
               <li>Vision-guided pick-and-place</li>
               <li>Grippers &amp; end-of-arm tooling</li>
             </ul>
-            <p class="outcome"><strong>Outcome:</strong> integrate PLC, HMI, vision and cobot into one working system.</p>
             <a href="#enquire" class="btn btn-ghost btn-block" data-program="Integrator">Enquire about Integrator</a>
           </article>
 
@@ -413,6 +418,7 @@
               <li><strong>~240</strong><span>hours</span></li>
               <li><strong>3</strong><span>projects</span></li>
             </ul>
+            <p class="outcome"><strong>Outcome:</strong> build and debug a full cell, with a capstone to show employers.</p>
             <p class="program-for">Everything in Integrator, plus:</p>
             <ul class="ticks">
               <li>Complete automation cell build</li>
@@ -421,7 +427,6 @@
               <li>Mentored capstone project</li>
               <li>Interview prep &amp; placement support</li>
             </ul>
-            <p class="outcome"><strong>Outcome:</strong> build and debug a full cell, with a capstone to show employers.</p>
             <a href="#enquire" class="btn btn-accent btn-block" data-program="Specialist">Enquire about Specialist</a>
           </article>
         </div>
@@ -433,9 +438,26 @@
           <div><strong>Certificate</strong><span>iAutomatia Academy certificate. Co-branded OEM certificate <em>(planned)</em></span></div>
         </div>
 
+        <div class="cta-strip cta-accent">
+          <div>
+            <h3>Visit our Hyderabad lab. See the hardware firsthand.</h3>
+            <p>Experience the cobots and PLC panels in person and speak with an instructor.</p>
+          </div>
+          <a href="#enquire" class="btn btn-dark btn-lg">Schedule Free Demo Session</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         7. SYLLABUS – phase summaries, full 12 weeks on demand
+         ===================================================================== -->
+    <section class="section section-alt" id="curriculum">
+      <div class="container">
+        <p class="eyebrow">Syllabus</p>
+        <h2>12 weeks, three phases</h2>
+        <p class="section-lead">Foundation covers Phase 1, Integrator Phases 1&ndash;2 and Specialist all three.</p>
         <!-- Curriculum: phase summaries by default, full 12 weeks on demand -->
-        <div class="curriculum" id="curriculum">
-          <h3 class="curriculum-title">12-week curriculum at a glance</h3>
+        <div class="curriculum">
           <div class="phase-grid">
             <article class="phase-card">
               <span class="phase-num">Phase 1 &middot; Weeks 1&ndash;4</span>
@@ -468,8 +490,8 @@
 
           <details class="syllabus">
             <summary class="btn btn-ghost">
-              <span class="when-closed">[ Expand Full 12-Week Curriculum ]</span>
-              <span class="when-open">Hide Full 12-Week Curriculum</span>
+              <span class="when-closed">[ Expand Full 12-Week Syllabus ]</span>
+              <span class="when-open">Hide Full 12-Week Syllabus</span>
             </summary>
             <ol class="timeline">
               <li class="tl-phase" data-phase="Foundation">
@@ -499,13 +521,6 @@
           </details>
         </div>
 
-        <div class="cta-strip">
-          <div>
-            <h3>Unsure which level is right for you?</h3>
-            <p>Visit our Hyderabad center, experience the hardware firsthand, and speak with an instructor.</p>
-          </div>
-          <a href="#enquire" class="btn btn-light btn-lg">Schedule Free Demo Session</a>
-        </div>
       </div>
     </section>
 
