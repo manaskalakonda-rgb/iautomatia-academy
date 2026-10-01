@@ -635,3 +635,130 @@ button[disabled] { opacity: 0.7; cursor: progress; }
   /* keep the footer clear of the bar */
   .site-footer { padding-bottom: calc(60px + 24px + env(safe-area-inset-bottom)); }
 }
+
+/* =====================================================================
+   Funnel layout: Attention → Interest → Trust → Proof → Program → Enquiry
+   ===================================================================== */
+
+/* Shared: every major section ends with a CTA */
+.section-end-cta {
+  margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 16px;
+}
+.section-end-cta p { margin: 0; font-weight: 600; color: var(--ink); }
+
+/* Short bullet lists used in cards */
+.mini-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.mini-list li { position: relative; padding-left: 18px; font-size: 0.93rem; color: var(--muted); }
+.mini-list li::before {
+  content: ""; position: absolute; left: 2px; top: 0.62em; width: 7px; height: 7px;
+  border-radius: 2px; background: var(--brand);
+}
+
+/* 1. Hero chips (replace the second paragraph) */
+.hero-chips { list-style: none; padding: 0; margin: 0 0 6px; display: flex; flex-wrap: wrap; gap: 8px; }
+.hero-chips li {
+  font-size: 0.85rem; font-weight: 600; color: var(--brand-dark);
+  background: #fff; border: 1px solid #cfe0f6; border-radius: 99px; padding: 5px 12px;
+}
+.hero.has-bg .hero-chips li { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); color: #fff; }
+
+/* 3. Trust: high-contrast lab section */
+.section-dark {
+  background:
+    radial-gradient(800px 420px at 15% 0%, rgba(10,105,215,0.35), transparent 60%),
+    var(--brand-deep);
+  color: #c9d8ee;
+}
+.section-dark h2, .section-dark h3 { color: #fff; }
+.section-dark .eyebrow { color: #8fc0ff; }
+.section-dark .section-lead { color: #b7c9e3; }
+.section-dark .tech-card {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14); box-shadow: none;
+}
+.section-dark .tech-card h3 { margin: 8px 0 10px; }
+.section-dark .mini-list li { color: #c9d8ee; }
+.section-dark .mini-list li::before { background: #6fb1ff; }
+.section-dark .ph:not(.has-photo) {
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 12px, transparent 12px 24px), rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.25); color: #9fb4d1;
+}
+.section-dark .ph-tag { color: #8fc0ff; }
+.tech-badge {
+  display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #0a2c5e; background: #8fc0ff; border-radius: 99px; padding: 3px 10px;
+}
+.section-dark .video-block {
+  background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.14); box-shadow: none;
+}
+.section-dark .video-copy .eyebrow { color: #8fc0ff; }
+.section-dark .note { color: #9fb4d1; }
+
+/* 4. Proof: gallery, career row, placeholders */
+.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+.ph-gallery { min-height: 260px; }
+.ph-gallery.has-photo { height: 300px; }
+.career-row {
+  background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 24px 26px; margin-bottom: 28px;
+}
+.career-row h3 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.career-tag {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #fff; background: var(--brand); border-radius: 99px; padding: 3px 10px;
+}
+.career-items { list-style: none; padding: 0; margin: 0 0 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.career-items li { display: flex; flex-direction: column; gap: 2px; padding-left: 14px; border-left: 3px solid var(--brand); }
+.career-items strong { color: var(--ink); }
+.career-items span { font-size: 0.9rem; color: var(--muted); }
+.career-row .note { margin: 0; }
+.proof-placeholders { display: grid; gap: 16px; }
+.proof-placeholders .logo-row { margin: 0; }
+.proof-placeholders .ph-quote { min-height: 110px; }
+.proof-placeholders .note { margin: 0; text-align: center; }
+
+/* 5. Program: stats row and progressive-disclosure curriculum */
+.program-stats {
+  list-style: none; padding: 0; margin: 0 0 16px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+.program-stats li {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  background: var(--tint); border-radius: 8px; padding: 8px 4px;
+}
+.program-stats strong { font-size: 1.25rem; color: var(--brand-dark); line-height: 1.1; }
+.program-stats span { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.program-card header .price { margin-top: 4px; }
+.program-card header h3 { margin: 0; }
+
+.curriculum { margin-top: 48px; }
+.curriculum-title { font-size: 1.35rem; margin-bottom: 16px; }
+.phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.phase-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px;
+}
+.phase-card h4 { font-size: 1.15rem; margin: 6px 0 10px; }
+.phase-num { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); }
+.phase-card-featured { border: 2px solid var(--brand); }
+
+.syllabus { margin-top: 20px; }
+.syllabus > summary {
+  list-style: none; display: table; margin: 0 auto; cursor: pointer; user-select: none;
+}
+.syllabus > summary::-webkit-details-marker { display: none; }
+.syllabus .when-open { display: none; }
+.syllabus[open] .when-open { display: inline; }
+.syllabus[open] .when-closed { display: none; }
+.syllabus[open] > summary { margin-bottom: 20px; }
+.syllabus .timeline li:not(.tl-phase) { background: #fff; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .phase-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 880px) {
+  .gallery, .career-items { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .section-end-cta .btn { width: 100%; }
+  .syllabus > summary { display: block; text-align: center; }
+}
