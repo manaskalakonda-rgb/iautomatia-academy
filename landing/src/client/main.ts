@@ -176,11 +176,12 @@ function initEnquiryForm(): void {
 }
 
 // ---------- Photos ----------
-// The server lists the files in assets/photos, so the page only requests photos that exist.
+// assets/photos/manifest.json (written by `npm run build`) lists the photo files,
+// so the page only requests photos that exist.
 let photoList: Promise<string[]> | null = null;
 
 function listPhotos(): Promise<string[]> {
-  photoList ??= fetch("/api/photos")
+  photoList ??= fetch("assets/photos/manifest.json", { cache: "no-cache" })
     .then((res) => (res.ok ? (res.json() as Promise<{ files: string[] }>) : { files: [] }))
     .then((body) => body.files)
     .catch(() => []);

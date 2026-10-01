@@ -3,3 +3,5 @@ dist/
 public/js/
 data/
 .env
+public/assets/photos/manifest.json
+.vercel/

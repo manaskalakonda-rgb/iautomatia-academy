@@ -1,13 +1,12 @@
 import { timingSafeEqual } from "node:crypto";
-import { readdir } from "node:fs/promises";
-import path from "node:path";
 import express, { type NextFunction, type Request, type Response } from "express";
 import { validateEnquiry } from "../shared/enquiry.js";
 import { rateLimit } from "./rateLimit.js";
 import type { EnquiryStore } from "./store.js";
 
 export interface AppOptions {
-  publicDir: string;
+  /** Serve the static site from here (local/Node hosting). On Vercel the CDN serves public/ instead. */
+  publicDir?: string;
   store: EnquiryStore;
   /** When set, GET /api/enquiries returns saved enquiries to requests with "Authorization: Bearer <token>". */
   adminToken?: string;
@@ -50,18 +49,6 @@ export function createApp(options: AppOptions): express.Express {
 
   app.get("/api/health", (_req, res) => {
     res.json({ ok: true });
-  });
-
-  // Lists the photos in public/assets/photos so the page only requests files that exist.
-  app.get("/api/photos", async (_req, res, next) => {
-    try {
-      const entries = await readdir(path.join(options.publicDir, "assets", "photos"), { withFileTypes: true }).catch(() => []);
-      const files = entries.filter((e) => e.isFile() && /\.(jpe?g|png|webp)$/i.test(e.name)).map((e) => e.name);
-      res.setHeader("Cache-Control", "no-cache");
-      res.json({ files });
-    } catch (err) {
-      next(err);
-    }
   });
 
   app.post(
@@ -113,7 +100,7 @@ export function createApp(options: AppOptions): express.Express {
     res.status(404).json({ message: "Not found" });
   });
 
-  app.use(express.static(options.publicDir, { extensions: ["html"], maxAge: "1h" }));
+  if (options.publicDir) app.use(express.static(options.publicDir, { extensions: ["html"], maxAge: "1h" }));
 
   // Malformed JSON and unexpected errors.
   app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {

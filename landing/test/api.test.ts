@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { after, before, test } from "node:test";
 import { createApp } from "../src/server/app.ts";
-import { EnquiryStore } from "../src/server/store.ts";
+import { FileEnquiryStore } from "../src/server/store.ts";
 
 let base = "";
 let dataDir = "";
@@ -15,7 +15,7 @@ before(async () => {
   dataDir = await mkdtemp(path.join(os.tmpdir(), "iautomatia-test-"));
   const app = createApp({
     publicDir: path.resolve("public"),
-    store: new EnquiryStore(dataDir),
+    store: new FileEnquiryStore(dataDir),
     adminToken: "secret-token",
   });
   const server = app.listen(0);
@@ -82,9 +82,3 @@ test("lists enquiries only with the admin token", async () => {
   assert.equal(body.enquiries.length, 2);
 });
 
-test("lists available photos", async () => {
-  const res = await fetch(`${base}/api/photos`);
-  const body = (await res.json()) as { files: string[] };
-  assert.ok(body.files.includes("hero-jaka-cobot.jpg"));
-  assert.ok(!body.files.includes("README.txt"));
-});
