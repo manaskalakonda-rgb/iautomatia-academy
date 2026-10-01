@@ -539,3 +539,6 @@ button[disabled] { opacity: 0.6; cursor: progress; }
   .spec-strip li { padding: 12px 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .live-dot { animation: none; } }
+
+/* Bracketed technical label on the form's submit button */
+.btn-mono-label { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; text-transform: uppercase; letter-spacing: 0.08em; }

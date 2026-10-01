@@ -59,6 +59,7 @@ function initEnquiryForm(): void {
   if (!form || !success) return;
 
   const submitBtn = $<HTMLButtonElement>('button[type="submit"]', form);
+  const submitLabel = submitBtn?.textContent ?? "";
   const textFields: EnquiryField[] = ["name", "phone", "email", "program"];
 
   const fieldEl = (name: EnquiryField): FieldElement | null =>
@@ -169,7 +170,7 @@ function initEnquiryForm(): void {
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = "Book my free demo";
+        submitBtn.textContent = submitLabel;
       }
     }
   });
