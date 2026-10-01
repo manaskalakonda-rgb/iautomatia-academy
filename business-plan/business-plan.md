@@ -1,7 +1,7 @@
 # iAutomatia Academy — Hyderabad Center
 ## Business Plan (draft, September 2026)
 
-> **Program real robots, not simulators. Graduate job-ready in 12 weeks.**
+> **Program real robots, not simulators. Build job-ready industrial automation skills in 12 weeks.**
 
 > **Note on numbers:** every figure in this plan (market size, fees, costs, enrolments, projections) is a **planning assumption to validate**. The market figures are approximate estimates. The live model is in [`financial-model.xlsx`](financial-model.xlsx); change the blue cells on its *Assumptions* sheet and every other sheet recalculates.
 

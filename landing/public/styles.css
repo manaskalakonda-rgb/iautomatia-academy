@@ -448,7 +448,8 @@ img { max-width: 100%; display: block; }
 
 /* ---------- Hero photo background (slideshow) ---------- */
 .hero { position: relative; overflow: hidden; }
-.hero > .container { position: relative; z-index: 1; }
+/* No z-index here: a stacking context would stop the product shot blending into the hero background */
+.hero > .container { position: relative; }
 .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero-slide {
   position: absolute; inset: 0;
