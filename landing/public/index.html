@@ -407,7 +407,7 @@
           </ul>
         </div>
 
-        <!-- Client-side validation only. Connect the form to your CRM/backend before going live. -->
+        <!-- Validated in the browser and again by the Node.js server (POST /api/enquiries). -->
         <form class="enquiry-form" id="enquiry-form" novalidate>
           <div class="field">
             <label for="name">Full name</label>
@@ -443,6 +443,11 @@
             </div>
             <p class="error" id="status-error" aria-live="polite"></p>
           </fieldset>
+          <!-- Honeypot: hidden from people, filled only by spam bots. -->
+          <div class="hp" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <button type="submit" class="btn btn-accent btn-block btn-lg">Book my free demo</button>
           <p class="form-success" id="form-success" role="status" hidden></p>
         </form>
@@ -490,6 +495,6 @@
 
   <a class="whatsapp-float" href="https://wa.me/919502318939" target="_blank" rel="noopener" aria-label="Chat on WhatsApp: +91 95023 18939">WhatsApp</a>
 
-  <script src="script.js"></script>
+  <script type="module" src="js/client/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+{
+  "name": "iautomatia-academy-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "iAutomatia Academy (Hyderabad Center) landing page – TypeScript + Node.js (Express)",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build:client": "tsc -p tsconfig.client.json",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node dist/server/index.js",
+    "dev": "npm run build:client && tsx watch src/server/index.ts",
+    "dev:client": "tsc -p tsconfig.client.json --watch",
+    "typecheck": "tsc -p tsconfig.client.json --noEmit && tsc -p tsconfig.server.json --noEmit",
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

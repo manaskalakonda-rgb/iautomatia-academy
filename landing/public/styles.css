@@ -491,3 +491,9 @@ img { max-width: 100%; display: block; }
 @media (prefers-reduced-motion: reduce) {
   .hero-slide { transition: none; transform: none; }
 }
+
+/* ---------- Form: spam honeypot and server error message ---------- */
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.enquiry-form { position: relative; }
+.form-success.form-error { background: #fdecec; border-color: var(--error); }
+button[disabled] { opacity: 0.7; cursor: progress; }
