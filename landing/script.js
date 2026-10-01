@@ -153,6 +153,95 @@
     form.reset();
   });
 
+  // ---------- Photos: drop files into assets/photos/ to replace placeholders ----------
+  // Each placeholder with data-photo="name" looks for assets/photos/name.jpg, .jpeg, .png or .webp.
+  // If none is found, the labelled placeholder stays visible.
+  var exts = ["jpg", "jpeg", "png", "webp"];
+  document.querySelectorAll(".ph[data-photo]").forEach(function (box) {
+    var name = box.getAttribute("data-photo");
+    (function tryExt(i) {
+      if (i >= exts.length) return;
+      var img = new Image();
+      img.onload = function () {
+        img.alt = box.getAttribute("data-alt") || "";
+        img.className = "ph-img";
+        img.loading = "lazy";
+        box.innerHTML = "";
+        box.appendChild(img);
+        box.classList.add("has-photo");
+        if (box.getAttribute("data-fit") === "contain") box.classList.add("fit-contain");
+      };
+      img.onerror = function () { tryExt(i + 1); };
+      img.src = "assets/photos/" + name + "." + exts[i];
+    })(0);
+  });
+
+  // ---------- Hero background slideshow ----------
+  // Looks for assets/photos/hero-bg-1, hero-bg-2, ... (jpg/jpeg/png/webp), stopping at the first
+  // missing number. With at least one photo, the hero switches to photo mode and cross-fades.
+  var hero = document.querySelector(".hero");
+  var heroBg = hero && hero.querySelector(".hero-bg");
+  if (heroBg) {
+    var found = [];
+    var MAX_SLIDES = 8;
+
+    var findPhoto = function (n, done) {
+      (function tryExt(i) {
+        if (i >= exts.length) return done(null);
+        var img = new Image();
+        img.onload = function () { done(img.src); };
+        img.onerror = function () { tryExt(i + 1); };
+        img.src = "assets/photos/hero-bg-" + n + "." + exts[i];
+      })(0);
+    };
+
+    var startSlideshow = function () {
+      if (!found.length) return;
+      found.forEach(function (src, i) {
+        var slide = document.createElement("div");
+        slide.className = "hero-slide" + (i === 0 ? " active" : "");
+        slide.style.backgroundImage = 'url("' + src + '")';
+        heroBg.appendChild(slide);
+      });
+      hero.classList.add("has-bg");
+
+      var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (found.length < 2 || reduceMotion) return;
+      var slides = heroBg.querySelectorAll(".hero-slide");
+      var current = 0;
+      setInterval(function () {
+        slides[current].classList.remove("active");
+        current = (current + 1) % slides.length;
+        slides[current].classList.add("active");
+      }, 5000);
+    };
+
+    (function next(n) {
+      if (n > MAX_SLIDES) return startSlideshow();
+      findPhoto(n, function (src) {
+        if (!src) return startSlideshow();
+        found.push(src);
+        next(n + 1);
+      });
+    })(1);
+  }
+
+  // ---------- YouTube video: load the player only when clicked ----------
+  document.querySelectorAll(".video-frame[data-youtube]").forEach(function (frame) {
+    var btn = frame.querySelector(".video-play");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var id = frame.getAttribute("data-youtube");
+      var iframe = document.createElement("iframe");
+      iframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
+      iframe.title = frame.getAttribute("data-title") || "Video";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.allowFullscreen = true;
+      btn.replaceWith(iframe);
+    });
+  });
+
   // ---------- Footer year ----------
   var year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
