@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>iAutomatia Academy Hyderabad – Course Brochure</title>
+<style>
+  /* Print-ready A4 brochure. Open in Chrome/Edge -> Print -> Destination "Save as PDF",
+     Paper A4, Margins "None", enable "Background graphics". */
+  @page { size: A4; margin: 0; }
+
+  :root {
+    --navy: #0c1a2e;
+    --navy-2: #13243d;
+    --steel: #3a4d68;
+    --steel-l: #8a9bb3;
+    --line: #d5dde8;
+    --paper: #ffffff;
+    --tint: #f2f5f9;
+    --ink: #1a2433;
+    --accent: #f5a524;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    color: var(--ink);
+    background: #7d8898;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 10mm auto;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+    padding: 18mm 17mm 22mm;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  @media print {
+    body { background: none; }
+    .page { margin: 0; box-shadow: none; }
+  }
+
+  h1, h2, h3, h4 { margin: 0 0 0.5em; line-height: 1.2; color: var(--navy); }
+  h2 { font-size: 22pt; letter-spacing: -0.01em; }
+  h3 { font-size: 13pt; }
+  h4 { font-size: 10.5pt; }
+  p { margin: 0 0 0.8em; }
+  ul { margin: 0 0 0.8em; padding-left: 1.1em; }
+  li { margin-bottom: 0.25em; }
+
+  .eyebrow {
+    font-size: 8pt; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 4mm;
+  }
+  .lead { font-size: 12pt; color: var(--steel); }
+  .muted { color: var(--steel); }
+  .small { font-size: 8.5pt; }
+
+  /* running header / footer */
+  .run-head {
+    position: absolute; top: 8mm; left: 17mm; right: 17mm;
+    display: flex; justify-content: space-between;
+    font-size: 7.5pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--steel-l);
+  }
+  .run-foot {
+    position: absolute; bottom: 9mm; left: 17mm; right: 17mm;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 7.5pt; color: var(--steel-l);
+    border-top: 1px solid var(--line); padding-top: 3mm;
+  }
+  .run-foot b { color: var(--navy); }
+
+  /* placeholders */
+  .ph {
+    border: 1.5px dashed var(--steel-l);
+    border-radius: 3mm;
+    background: repeating-linear-gradient(45deg, #eef2f7 0 6px, #f7f9fc 6px 12px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 4mm; color: var(--steel);
+    font-size: 8.5pt;
+  }
+  .ph b { font-size: 7pt; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5mm; }
+  .ph.dark { background: repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 6px, transparent 6px 12px), var(--navy-2); border-color: var(--steel); color: var(--steel-l); }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    background:
+      radial-gradient(120mm 90mm at 90% 5%, rgba(245,165,36,0.18), transparent 70%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 70%, #24364f 100%);
+    color: #e6ebf2;
+    padding: 20mm 18mm;
+    display: flex; flex-direction: column;
+  }
+  .cover .brand { display: flex; align-items: center; gap: 4mm; }
+  .cover .mark {
+    width: 14mm; height: 14mm; border-radius: 3mm; background: var(--accent);
+    color: var(--navy); font-weight: 800; font-size: 15pt; display: grid; place-items: center;
+  }
+  .cover .brand-text { font-size: 14pt; color: #fff; line-height: 1.15; }
+  .cover .brand-text small { display: block; font-size: 8pt; letter-spacing: 0.18em; text-transform: uppercase; color: var(--steel-l); }
+  .cover h1 { color: #fff; font-size: 34pt; letter-spacing: -0.02em; margin: 22mm 0 6mm; }
+  .cover h1 span { color: var(--accent); }
+  .cover .sub { font-size: 12.5pt; max-width: 150mm; color: #c9d3e0; }
+  .cover .ph { height: 88mm; margin: 10mm 0 8mm; }
+  .cover-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin-top: auto; }
+  .cover-facts div { border-top: 2px solid var(--accent); padding-top: 3mm; }
+  .cover-facts strong { display: block; color: #fff; font-size: 13pt; }
+  .cover-facts span { font-size: 8.5pt; color: var(--steel-l); }
+  .cover .edition { margin-top: 8mm; font-size: 8pt; color: var(--steel-l); letter-spacing: 0.08em; }
+
+  /* ---------- Generic blocks ---------- */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+  .card { border: 1px solid var(--line); border-radius: 3mm; padding: 5mm; background: var(--tint); }
+  .card h4 { margin-bottom: 1.5mm; }
+  .card p { margin: 0; font-size: 9.5pt; color: var(--steel); }
+  .card.accent { border-left: 3px solid var(--accent); }
+  .callout {
+    background: var(--navy); color: #e6ebf2; border-radius: 3mm; padding: 6mm 7mm;
+  }
+  .callout h3 { color: #fff; }
+  .callout .acc { color: var(--accent); }
+
+  .ticks { list-style: none; padding: 0; }
+  .ticks li { position: relative; padding-left: 5.5mm; }
+  .ticks li::before {
+    content: ""; position: absolute; left: 0.5mm; top: 1.6mm; width: 2.6mm; height: 1.4mm;
+    border-left: 1.6px solid var(--accent); border-bottom: 1.6px solid var(--accent); transform: rotate(-45deg);
+  }
+
+  .compare { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+  .compare th, .compare td { border-bottom: 1px solid var(--line); padding: 2.4mm 3mm; text-align: left; vertical-align: top; }
+  .compare thead th { background: var(--navy); color: #fff; font-weight: 600; }
+  .compare thead th:last-child { background: var(--accent); color: var(--navy); }
+  .compare td:first-child { font-weight: 600; color: var(--navy); width: 30%; }
+
+  /* ---------- Program pages ---------- */
+  .prog-head {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 6mm;
+    border-bottom: 2px solid var(--navy); padding-bottom: 4mm; margin-bottom: 5mm;
+  }
+  .prog-head h2 { margin: 0; font-size: 26pt; }
+  .prog-level { font-size: 8pt; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+  .prog-facts { display: flex; gap: 2.5mm; flex-wrap: wrap; justify-content: flex-end; }
+  .pill { background: var(--tint); border: 1px solid var(--line); border-radius: 99px; padding: 1.2mm 3.5mm; font-size: 8.5pt; font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .pill.fee { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  .weeks { width: 100%; border-collapse: collapse; font-size: 9pt; margin-bottom: 5mm; }
+  .weeks th, .weeks td { padding: 2mm 3mm; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .weeks thead th { background: var(--navy); color: #fff; font-size: 8.5pt; }
+  .weeks td.wk { width: 17mm; font-weight: 700; color: var(--accent); white-space: nowrap; }
+  .weeks td.topic { width: 50mm; font-weight: 600; color: var(--navy); }
+  .weeks tr.phase td { background: var(--tint); font-size: 7.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); padding: 1.3mm 3mm; }
+  .weeks.compact td { padding: 1.5mm 3mm; font-size: 8.6pt; }
+
+  .roles { display: flex; flex-wrap: wrap; gap: 2mm; margin-top: 1mm; }
+  .role { border: 1.5px solid var(--navy); border-radius: 2mm; padding: 1.2mm 3mm; font-size: 8.8pt; font-weight: 600; color: var(--navy); }
+  .role.primary { background: var(--accent); border-color: var(--accent); }
+
+  /* ---------- Fees ---------- */
+  .fees { width: 100%; border-collapse: collapse; font-size: 10pt; margin-bottom: 6mm; }
+  .fees th, .fees td { padding: 3mm; border-bottom: 1px solid var(--line); text-align: left; }
+  .fees thead th { background: var(--navy); color: #fff; font-weight: 600; }
+  .fees td.num, .fees th.num { text-align: right; white-space: nowrap; }
+  .fees tbody tr:nth-child(even) td { background: var(--tint); }
+  .fees td strong { color: var(--navy); }
+
+  .slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; margin-bottom: 6mm; }
+  .slot { border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 2mm; padding: 4mm; background: var(--tint); }
+  .slot strong { display: block; color: var(--navy); font-size: 11pt; }
+  .slot .time { font-size: 10pt; font-weight: 600; color: var(--ink); margin: 1mm 0; }
+  .slot span { font-size: 8.5pt; color: var(--steel); }
+
+  /* ---------- Enrol ---------- */
+  .steps { counter-reset: s; list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
+  .steps li { counter-increment: s; border: 1px solid var(--line); border-radius: 3mm; padding: 11mm 4mm 4mm; position: relative; background: var(--tint); font-size: 9.2pt; }
+  .steps li::before {
+    content: counter(s); position: absolute; top: 3.5mm; left: 4mm;
+    width: 6mm; height: 6mm; border-radius: 50%; background: var(--accent); color: var(--navy);
+    font-weight: 800; font-size: 9pt; display: grid; place-items: center;
+  }
+  .steps li strong { display: block; color: var(--navy); margin-bottom: 1mm; }
+  .contact { display: grid; grid-template-columns: 1fr 52mm; gap: 8mm; align-items: stretch; }
+  .contact dl { margin: 0; display: grid; grid-template-columns: 28mm 1fr; row-gap: 2.5mm; font-size: 10pt; }
+  .contact dt { font-weight: 700; color: #fff; }
+  .contact dd { margin: 0; color: #c9d3e0; }
+  .qr { height: 52mm; background: #fff !important; }
+</style>
+</head>
+<body>
+
+<!-- =========================== PAGE 1: COVER =========================== -->
+<section class="page cover">
+  <div class="brand">
+    <div class="mark">iA</div>
+    <div class="brand-text">iAutomatia <b>Academy</b><small>Hyderabad Center</small></div>
+  </div>
+
+  <h1>Program real robots,<br /><span>not simulators.</span><br />Graduate job-ready in 12 weeks.</h1>
+  <p class="sub">Hands-on industrial automation training on real 6-axis JAKA collaborative robots, Siemens, Mitsubishi and Allen-Bradley PLCs, vision sensors and Modbus/Profinet networks.</p>
+
+  <div class="ph dark"><b>Image placeholder</b>COVER PHOTO: JAKA cobot cell in the lab, student at the teach pendant, PLC panel and vision sensor in frame</div>
+
+  <div class="cover-facts">
+    <div><strong>Foundation</strong><span>4 weeks &middot; ~80 hrs</span></div>
+    <div><strong>Integrator</strong><span>8 weeks &middot; ~160 hrs</span></div>
+    <div><strong>Specialist</strong><span>12 weeks &middot; ~240 hrs</span></div>
+  </div>
+  <p class="edition">COURSE BROCHURE &middot; 2027 BATCHES &middot; [AREA], HYDERABAD</p>
+</section>
+
+<!-- =========================== PAGE 2: ABOUT =========================== -->
+<section class="page">
+  <div class="run-head"><span>iAutomatia Academy &middot; Hyderabad Center</span><span>About the academy</span></div>
+
+  <p class="eyebrow">About the academy</p>
+  <h2>We turn engineering graduates into industry-ready automation specialists</h2>
+  <p class="lead">iAutomatia Academy is a hardware-first, job-oriented training institute. Every program is built around real industrial equipment, because plants hire people who can wire, program and troubleshoot machines, not people who have only used a simulator.</p>
+
+  <div class="grid-3" style="margin: 7mm 0;">
+    <div class="card accent"><h4>Hardware-first</h4><p>Real JAKA cobots, real PLC trainer kits from three brands, real vision sensors and live industrial networks.</p></div>
+    <div class="card accent"><h4>Small ratios</h4><p>Batches of 12. At most 4 students share one cobot cell, so everyone gets regular hands-on time.</p></div>
+    <div class="card accent"><h4>Job-oriented</h4><p>Capstone project mentoring, interview preparation and placement support for Specialist learners.</p></div>
+  </div>
+
+  <h3>Hardware-first vs. simulator-based training</h3>
+  <table class="compare">
+    <thead><tr><th></th><th>Typical simulator-based course</th><th>iAutomatia Academy</th></tr></thead>
+    <tbody>
+      <tr><td>PLC practice</td><td>Virtual PLC on screen</td><td>Real trainer kits: wiring, download, test, fault-find</td></tr>
+      <tr><td>Robotics</td><td>3D simulation, if at all</td><td>Real 6-axis JAKA collaborative robots</td></tr>
+      <tr><td>PLC brands</td><td>Usually one</td><td>Siemens, Mitsubishi and Allen-Bradley</td></tr>
+      <tr><td>Communication</td><td>Rarely covered</td><td>Live Modbus TCP and Profinet between PLC and robot</td></tr>
+      <tr><td>Vision</td><td>Not covered</td><td>Vision-guided pick-and-place</td></tr>
+      <tr><td>Batch / ratio</td><td>Large batches</td><td>12 per batch, max 4 per cobot cell</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid-2" style="margin-top: 8mm;">
+    <div>
+      <h3>Who should join</h3>
+      <ul class="ticks">
+        <li><b>Final-year engineering students</b> (Mech, EEE, ECE, EIE, Mechatronics) who want practical skills before placements.</li>
+        <li><b>Fresh graduates</b> looking for their first automation job.</li>
+        <li><b>Working engineers</b> moving into robotics and controls &mdash; weekend batches available.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Where our learners aim to work</h3>
+      <ul class="ticks">
+        <li>Automotive plants</li>
+        <li>Electronics manufacturing</li>
+        <li>Pharmaceutical plants</li>
+        <li>Smart-manufacturing facilities and system integrators</li>
+      </ul>
+      <p class="small muted">We provide placement support; we do not guarantee jobs.</p>
+    </div>
+  </div>
+
+  <div class="run-foot"><span><b>iAutomatia Academy</b> &middot; [Area], Hyderabad</span><span>2</span></div>
+</section>
+
+<!-- =========================== PAGE 3: HARDWARE LAB =========================== -->
+<section class="page">
+  <div class="run-head"><span>iAutomatia Academy &middot; Hyderabad Center</span><span>The hardware lab</span></div>
+
+  <p class="eyebrow">The hardware lab</p>
+  <h2>The same equipment you will meet on the plant floor</h2>
+  <p class="lead">Each cobot cell combines a JAKA collaborative robot, a PLC, a vision sensor and grippers, connected over industrial networks &mdash; a small, complete production cell.</p>
+
+  <div class="ph" style="height: 52mm; margin: 5mm 0;"><b>Image placeholder</b>PHOTO: Wide shot of the lab &mdash; three cobot cells, PLC trainer benches and workstations</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>JAKA collaborative robots</h4>
+      <p>Fence-less 6-axis cobots. Safety settings, jogging, teach pendant programming, tool frames, pick-and-place and integration with PLCs.</p>
+    </div>
+    <div class="card">
+      <h4>Three PLC brands</h4>
+      <p>Siemens (TIA Portal), Mitsubishi (GX Works) and Allen-Bradley (Studio 5000) trainer kits with real I/O.</p>
+    </div>
+    <div class="card">
+      <h4>Vision sensors</h4>
+      <p>Camera setup and calibration, part detection and vision-guided picking.</p>
+    </div>
+    <div class="card">
+      <h4>Industrial communication</h4>
+      <p>Native Modbus TCP and Profinet links between PLC and cobot: handshakes, signal mapping and fault diagnosis.</p>
+    </div>
+    <div class="card">
+      <h4>Grippers &amp; end-of-arm tooling</h4>
+      <p>Grippers and EOAT selection, mounting, tool frames and payload settings.</p>
+    </div>
+    <div class="card">
+      <h4>HMI</h4>
+      <p>Operator screens for start/stop, status and alarms, linked to the PLC.</p>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top: 6mm;">
+    <div class="ph" style="height: 36mm;"><b>Image placeholder</b>PHOTO: Close-up of the JAKA teach pendant / app</div>
+    <div class="ph" style="height: 36mm;"><b>Image placeholder</b>PHOTO: PLC trainer kit with wiring and I/O modules</div>
+  </div>
+
+  <div class="run-foot"><span><b>iAutomatia Academy</b> &middot; [Area], Hyderabad</span><span>3</span></div>
+</section>
+
+<!-- =========================== PAGE 4: FOUNDATION =========================== -->
+<section class="page">
+  <div class="run-head"><span>iAutomatia Academy &middot; Hyderabad Center</span><span>Program 1 of 3</span></div>
+
+  <div class="prog-head">
+    <div><div class="prog-level">Level 1 &middot; Start here</div><h2>Foundation</h2></div>
+    <div class="prog-facts"><span class="pill">4 weeks</span><span class="pill">~80 hours</span><span class="pill fee">&#8377;35,000 + GST</span></div>
+  </div>
+  <p class="lead">For beginners. Learn PLC programming on real hardware and run your first program on a collaborative robot, safely.</p>
+
+  <h3>Week-by-week curriculum</h3>
+  <table class="weeks">
+    <thead><tr><th>Week</th><th>Topic</th><th>What you do</th></tr></thead>
+    <tbody>
+      <tr><td class="wk">Week 1</td><td class="topic">Automation &amp; PLC fundamentals</td><td>Industrial automation overview, electrical safety, PLC hardware, digital I/O wiring, first ladder logic programs.</td></tr>
+      <tr><td class="wk">Week 2</td><td class="topic">Timers, counters &amp; sequences</td><td>Timers, counters, latching, interlocks and sequential logic on real PLC trainer kits.</td></tr>
+      <tr><td class="wk">Week 3</td><td class="topic">Cobot safety &amp; teach pendant</td><td>Collaborative robot safety concepts, safety settings, jogging, coordinate frames, waypoints and teach pendant programming.</td></tr>
+      <tr><td class="wk">Week 4</td><td class="topic">First pick-and-place</td><td>Basic pick-and-place program with gripper I/O; practical assessment.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid-2">
+    <div>
+      <h3>Skills you gain</h3>
+      <ul class="ticks">
+        <li>Read and write ladder logic</li>
+        <li>Wire and test digital inputs and outputs</li>
+        <li>Use timers, counters and interlocks</li>
+        <li>Work safely around a collaborative robot</li>
+        <li>Jog a cobot and program it from the teach pendant</li>
+        <li>Build a basic pick-and-place routine</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Suitable job roles</h3>
+      <p class="small muted">Entry-level / trainee positions</p>
+      <div class="roles">
+        <span class="role primary">Robotics Technician</span>
+        <span class="role primary">PLC Programmer (trainee)</span>
+      </div>
+      <h3 style="margin-top: 6mm;">Best for</h3>
+      <p>Final-year students and beginners who want a short, practical start. Continue to Integrator to add networking, HMI and vision.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 5mm;">
+    <h3>You receive</h3>
+    <p style="margin:0;">iAutomatia Academy certificate on successful completion &middot; Co-branded OEM certificate <span class="acc">(planned)</span></p>
+  </div>
+
+  <div class="run-foot"><span><b>iAutomatia Academy</b> &middot; Fees exclude GST</span><span>4</span></div>
+</section>
+
+<!-- =========================== PAGE 5: INTEGRATOR =========================== -->
+<section class="page">
+  <div class="run-head"><span>iAutomatia Academy &middot; Hyderabad Center</span><span>Program 2 of 3</span></div>
+
+  <div class="prog-head">
+    <div><div class="prog-level">Level 2 &middot; Includes Foundation</div><h2>Integrator</h2></div>
+    <div class="prog-facts"><span class="pill">8 weeks</span><span class="pill">~160 hours</span><span class="pill fee">&#8377;65,000 + GST</span></div>
+  </div>
+  <p class="lead">Everything in Foundation, plus connecting PLCs, HMIs, vision and cobots into one working system.</p>
+
+  <h3>Week-by-week curriculum</h3>
+  <table class="weeks">
+    <thead><tr><th>Week</th><th>Topic</th><th>What you do</th></tr></thead>
+    <tbody>
+      <tr class="phase"><td colspan="3">Weeks 1&ndash;4 &middot; Foundation</td></tr>
+      <tr><td class="wk">Week 1</td><td class="topic">Automation &amp; PLC fundamentals</td><td>PLC hardware, digital I/O wiring, first ladder logic programs.</td></tr>
+      <tr><td class="wk">Week 2</td><td class="topic">Timers, counters &amp; sequences</td><td>Timers, counters, latching, interlocks, sequential logic.</td></tr>
+      <tr><td class="wk">Week 3</td><td class="topic">Cobot safety &amp; teach pendant</td><td>Safety settings, jogging, coordinate frames, teach pendant programming.</td></tr>
+      <tr><td class="wk">Week 4</td><td class="topic">First pick-and-place</td><td>Basic pick-and-place with gripper I/O; assessment.</td></tr>
+      <tr class="phase"><td colspan="3">Weeks 5&ndash;8 &middot; Integration</td></tr>
+      <tr><td class="wk">Week 5</td><td class="topic">PLC&ndash;cobot over Modbus TCP</td><td>Industrial networking basics, signal mapping and PLC&ndash;robot handshakes over Modbus TCP.</td></tr>
+      <tr><td class="wk">Week 6</td><td class="topic">Profinet &amp; HMI basics</td><td>Profinet device configuration; HMI screens for start/stop, status and alarms.</td></tr>
+      <tr><td class="wk">Week 7</td><td class="topic">Vision-guided picking</td><td>Vision sensor setup and calibration, part detection, vision-guided pick-and-place.</td></tr>
+      <tr><td class="wk">Week 8</td><td class="topic">Grippers, EOAT &amp; integration project</td><td>Gripper and end-of-arm tooling, tool frames and payload; integration project and assessment.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid-2">
+    <div>
+      <h3>Skills you gain</h3>
+      <ul class="ticks">
+        <li>All Foundation skills</li>
+        <li>Configure Modbus TCP and Profinet between PLC and cobot</li>
+        <li>Design simple HMI operator screens</li>
+        <li>Set up and calibrate a vision sensor</li>
+        <li>Build vision-guided pick-and-place</li>
+        <li>Select and configure grippers and EOAT</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Suitable job roles</h3>
+      <div class="roles">
+        <span class="role primary">PLC Programmer</span>
+        <span class="role primary">Robotics Technician</span>
+        <span class="role">Automation Engineer (junior)</span>
+      </div>
+      <h3 style="margin-top: 6mm;">Best for</h3>
+      <p>Students and working engineers who want to integrate robots with PLCs. Weekend batch available.</p>
+    </div>
+  </div>
+
+  <div class="run-foot"><span><b>iAutomatia Academy</b> &middot; Fees exclude GST</span><span>5</span></div>
+</section>
+
+<!-- =========================== PAGE 6: SPECIALIST =========================== -->
+<section class="page">
+  <div class="run-head"><span>iAutomatia Academy &middot; Hyderabad Center</span><span>Program 3 of 3</span></div>
+
+  <div class="prog-head">
+    <div><div class="prog-level">Level 3 &middot; Includes Integrator</div><h2>Specialist</h2></div>
+    <div class="prog-facts"><span class="pill">12 weeks</span><span class="pill">~240 hours</span><span class="pill fee">&#8377;95,000 + GST</span></div>
+  </div>
+  <p class="lead" style="margin-bottom: 3mm;">Everything in Integrator, plus a complete cell build, three PLC brands, fault diagnosis, a mentored capstone and placement support.</p>
+
+  <table class="weeks compact">
+    <thead><tr><th>Week</th><th>Topic</th><th>What you do</th></tr></thead>
+    <tbody>
+      <tr class="phase"><td colspan="3">Weeks 1&ndash;4 &middot; Foundation</td></tr>
+      <tr><td class="wk">Week 1</td><td class="topic">Automation &amp; PLC fundamentals</td><td>PLC hardware, digital I/O wiring, ladder logic.</td></tr>
+      <tr><td class="wk">Week 2</td><td class="topic">Timers, counters &amp; sequences</td><td>Timers, counters, interlocks, sequential logic.</td></tr>
+      <tr><td class="wk">Week 3</td><td class="topic">Cobot safety &amp; teach pendant</td><td>Safety settings, jogging, frames, teach pendant.</td></tr>
+      <tr><td class="wk">Week 4</td><td class="topic">First pick-and-place</td><td>Basic pick-and-place with gripper I/O.</td></tr>
+      <tr class="phase"><td colspan="3">Weeks 5&ndash;8 &middot; Integration</td></tr>
+      <tr><td class="wk">Week 5</td><td class="topic">PLC&ndash;cobot over Modbus TCP</td><td>Signal mapping and PLC&ndash;robot handshakes.</td></tr>
+      <tr><td class="wk">Week 6</td><td class="topic">Profinet &amp; HMI basics</td><td>Profinet configuration; HMI screens.</td></tr>
+      <tr><td class="wk">Week 7</td><td class="topic">Vision-guided picking</td><td>Vision calibration and guided pick-and-place.</td></tr>
+      <tr><td class="wk">Week 8</td><td class="topic">Grippers, EOAT &amp; project</td><td>End-of-arm tooling; integration project.</td></tr>
+      <tr class="phase"><td colspan="3">Weeks 9&ndash;12 &middot; Specialisation</td></tr>
+      <tr><td class="wk">Week 9</td><td class="topic">Multi-brand PLC I</td><td>Siemens TIA Portal and Mitsubishi GX Works: porting the same logic across platforms.</td></tr>
+      <tr><td class="wk">Week 10</td><td class="topic">Multi-brand PLC II &amp; cell build</td><td>Allen-Bradley Studio 5000; start of the complete automation cell build.</td></tr>
+      <tr><td class="wk">Week 11</td><td class="topic">Fault diagnosis &amp; capstone build</td><td>Structured troubleshooting of I/O, network and robot faults; capstone development with a mentor.</td></tr>
+      <tr><td class="wk">Week 12</td><td class="topic">Capstone demo &amp; career launch</td><td>Capstone demonstration, resume and portfolio, mock interviews, placement support.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid-2">
+    <div>
+      <h3>Skills you gain</h3>
+      <ul class="ticks" style="font-size: 9.6pt;">
+        <li>All Integrator skills</li>
+        <li>Program Siemens, Mitsubishi and Allen-Bradley PLCs</li>
+        <li>Build and commission a complete automation cell</li>
+        <li>Diagnose I/O, network and robot faults systematically</li>
+        <li>Document and present an engineering project</li>
+        <li>Handle technical interviews with confidence</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Suitable job roles</h3>
+      <div class="roles">
+        <span class="role primary">Automation Engineer</span>
+        <span class="role primary">PLC Programmer</span>
+        <span class="role primary">Robotics Technician</span>
+        <span class="role primary">Controls Engineer</span>
+      </div>
+      <h3 style="margin-top: 5mm;">Includes</h3>
+      <p style="font-size: 9.6pt;">Capstone project mentoring &middot; interview preparation &middot; placement support with hiring partners in automotive, electronics, pharma and smart manufacturing.</p>
+    </div>
+  </div>
+
+  <div class="run-foot"><span><b>iAutomatia Academy</b> &middot; Fees exclude GST</span><span>6</span></div>
+</section>
+
+<!-- =========================== PAGE 7: BATCHES & FEES =========================== -->
+<section class="page">
+  <div class="run-head"><span>iAutomatia Academy &middot; Hyderabad Center</span><span>Batches &amp; fees</span></div>
+
+  <p class="eyebrow">Batch timings &amp; fees</p>
+  <h2>Choose a batch that fits your day</h2>
+  <p class="lead">Batch size is 12, with at most 4 students per cobot cell.</p>
+
+  <h3>Batch timings</h3>
+  <div class="slots">
+    <div class="slot"><strong>Morning</strong><div class="time">[08:00 &ndash; 12:00]</div><span>Mon &ndash; Fri</span></div>
+    <div class="slot"><strong>Afternoon</strong><div class="time">[12:30 &ndash; 16:30]</div><span>Mon &ndash; Fri</span></div>
+    <div class="slot"><strong>Evening</strong><div class="time">[17:00 &ndash; 21:00]</div><span>Mon &ndash; Fri</span></div>
+    <div class="slot"><strong>Weekend</strong><div class="time">[Sat &amp; Sun]</div><span>For working engineers; same hours over a longer calendar period</span></div>
+  </div>
+  <p class="small muted" style="margin-top: -3mm;">Timings in [brackets] are indicative and will be confirmed at enrolment.</p>
+
+  <h3 style="margin-top: 6mm;">Program fees</h3>
+  <table class="fees">
+    <thead>
+      <tr><th>Program</th><th>Duration</th><th>Hours</th><th class="num">Fee (excl. GST)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Foundation</strong></td><td>4 weeks</td><td>~80 hrs</td><td class="num"><strong>&#8377;35,000</strong></td></tr>
+      <tr><td><strong>Integrator</strong><br /><span class="small muted">includes Foundation</span></td><td>8 weeks</td><td>~160 hrs</td><td class="num"><strong>&#8377;65,000</strong></td></tr>
+      <tr><td><strong>Specialist</strong><br /><span class="small muted">includes Integrator, capstone &amp; placement support</span></td><td>12 weeks</td><td>~240 hrs</td><td class="num"><strong>&#8377;95,000</strong></td></tr>
+    </tbody>
+  </table>
+  <p class="small muted">GST is charged extra at the applicable rate. Durations are for weekday batches.</p>
+
+  <div class="grid-2" style="margin-top: 6mm;">
+    <div class="card accent">
+      <h4>EMI options</h4>
+      <p>EMI options are available. Ask your counsellor for current tenure and partner details: [EMI partner / tenure &mdash; to be added].</p>
+    </div>
+    <div class="card accent">
+      <h4>Certificate</h4>
+      <p>iAutomatia Academy certificate on successful completion. Co-branded OEM certificate: <b>planned</b>.</p>
+    </div>
+    <div class="card accent">
+      <h4>What's included</h4>
+      <p>Lab access during batch hours, workstation laptops with the required software, course material and assessments.</p>
+    </div>
+    <div class="card accent">
+      <h4>Corporate &amp; group training</h4>
+      <p>Custom upskilling programs for plant and maintenance teams. Contact us for a proposal.</p>
+    </div>
+  </div>
+
+  <div class="run-foot"><span><b>iAutomatia Academy</b> &middot; Fees exclude GST</span><span>7</span></div>
+</section>
+
+<!-- =========================== PAGE 8: ENROL & CONTACT =========================== -->
+<section class="page">
+  <div class="run-head"><span>iAutomatia Academy &middot; Hyderabad Center</span><span>How to enrol</span></div>
+
+  <p class="eyebrow">How to enrol</p>
+  <h2>From enquiry to your first day in the lab</h2>
+
+  <ol class="steps" style="margin: 7mm 0 9mm;">
+    <li><strong>Enquire</strong>Call, WhatsApp, fill the website form or scan the QR code.</li>
+    <li><strong>Free demo</strong>Visit the lab and see a cobot and PLC working together.</li>
+    <li><strong>Counselling</strong>Pick the right program and batch; get fee and EMI details.</li>
+    <li><strong>Enrol</strong>Complete the admission form, pay the fee or first EMI and reserve your seat.</li>
+  </ol>
+
+  <div class="grid-2" style="margin-bottom: 8mm;">
+    <div>
+      <h3>Documents to bring</h3>
+      <ul class="ticks">
+        <li>Photo ID (Aadhaar / PAN / passport)</li>
+        <li>Latest mark sheet or degree certificate</li>
+        <li>Two passport-size photographs</li>
+        <li>Employer ID (working professionals, weekend batch)</li>
+      </ul>
+    </div>
+    <div class="ph" style="min-height: 45mm;"><b>Image placeholder</b>PHOTO: Counsellor with a student and parent at the front desk</div>
+  </div>
+
+  <div class="callout">
+    <div class="contact">
+      <div>
+        <h3>Contact us</h3>
+        <dl>
+          <dt>Address</dt><dd>iAutomatia Academy &ndash; Hyderabad Center<br />[Building / Street], [Area], Hyderabad, Telangana [PIN]</dd>
+          <dt>Phone</dt><dd>+91 95023 18939</dd>
+          <dt>WhatsApp</dt><dd>+91 95023 18939 (wa.me/919502318939)</dd>
+          <dt>Email</dt><dd>support@iautomatia.com</dd>
+          <dt>Website</dt><dd>[www.example.com]</dd>
+          <dt>Hours</dt><dd>[Mon &ndash; Sat, 09:00 &ndash; 19:00]</dd>
+        </dl>
+      </div>
+      <div class="ph qr"><b>QR code placeholder</b>Link to enquiry form / WhatsApp</div>
+    </div>
+  </div>
+
+  <p style="margin-top: 8mm; text-align: center; font-size: 13pt; font-weight: 700; color: var(--navy);">
+    Program real robots, not simulators. Graduate job-ready in 12 weeks.
+  </p>
+  <p class="small muted" style="text-align:center;">Fees exclude GST and may change; confirm at enrolment. Placement support is not a job guarantee. JAKA, Siemens, Mitsubishi and Allen-Bradley are trademarks of their respective owners.</p>
+
+  <div class="run-foot"><span><b>iAutomatia Academy</b> &middot; [Area], Hyderabad</span><span>8</span></div>
+</section>
+
+</body>
+</html>
