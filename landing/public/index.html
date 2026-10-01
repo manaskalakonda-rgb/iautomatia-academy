@@ -7,7 +7,7 @@
   <meta name="description" content="Build job-ready industrial automation skills in 12 weeks with hands-on training on real JAKA cobots and Siemens, Mitsubishi and Allen-Bradley PLCs in Hyderabad." />
   <link rel="icon" type="image/png" href="assets/mark.png" />
   <link rel="preload" href="assets/fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=20261001-6" />
+  <link rel="stylesheet" href="styles.css?v=20261001-7" />
 </head>
 <body>
 
@@ -24,7 +24,7 @@
       <nav id="site-nav" class="site-nav" aria-label="Main">
         <a href="#value">Why us</a>
         <a href="#audience">Who can join</a>
-        <a href="#tech">Lab</a>
+        <a href="#lab">Lab</a>
         <a href="#projects">Projects</a>
         <a href="#programs">Programs</a>
         <a href="#curriculum">Syllabus</a>
@@ -45,28 +45,47 @@
       <div class="container hero-grid">
         <div class="hero-copy">
           <p class="eyebrow pill">Industrial Automation Training &middot; Hyderabad</p>
-          <h1>Program real robots, <span class="accent">not simulators.</span><br />Build job-ready industrial automation skills in 12 weeks.</h1>
-          <p class="lead">Coaching on real 6-axis <strong>JAKA collaborative robots</strong> and <strong>PLCs &mdash; Siemens, Mitsubishi, and Allen-Bradley</strong> &mdash; with hands-on experience on real industrial hardware.</p>
-          <ul class="hero-chips">
-            <li>Real JAKA 6-axis cobots</li>
-            <li>3 PLC brands</li>
-            <li>Vision &amp; Modbus/Profinet</li>
+          <h1>Program real robots,<br /><span class="accent">not simulators.</span></h1>
+          <p class="lead">Hands-on training with real JAKA cobots, Siemens, Mitsubishi &amp; Allen-Bradley PLCs.</p>
+
+          <ul class="spec-strip" aria-label="Key specs">
+            <li><strong>12</strong><span>Weeks</span></li>
+            <li><strong>240</strong><span>Hours</span></li>
+            <li><strong>Max 4</strong><span>Students / Cobot Cell</span></li>
           </ul>
+          <p class="spec-note">Specialist program. Foundation: 4 weeks &middot; ~80 hrs. Integrator: 8 weeks &middot; ~160 hrs.</p>
+
           <div class="hero-ctas">
             <a href="#enquire" class="btn btn-accent btn-lg">Book a Free Lab Demo</a>
-            <a href="#programs" class="btn btn-ghost btn-lg">View programs</a>
+            <a href="#lab" class="btn btn-ghost btn-lg btn-mono">[ See the Lab in Action ]</a>
           </div>
-          <ul class="hero-facts">
-            <li><strong>12</strong><span>students per batch</span></li>
-            <li><strong>4</strong><span>max students per cobot cell</span></li>
-            <li><strong>3</strong><span>PLC brands on real hardware</span></li>
-          </ul>
         </div>
+
         <div class="hero-media">
-          <div class="ph ph-hero" data-photo="hero-jaka-cobot-cutout" data-fit="contain" data-alt="JAKA 6-axis collaborative robot training cell with PLC control panel and teach pendant">
-            <span class="ph-tag">Image placeholder</span>
-            <span class="ph-label">PHOTO: Student programming a JAKA cobot with the teach pendant, PLC panel visible in background</span>
-          </div>
+          <!-- INSERT REAL PHOTOGRAPH/VIDEO HERE: Student + JAKA Cobot + PLC Panel + Laptop/HMI. Avoid stock imagery.
+               Save as  landing/public/assets/hero-lab-demo.mp4      (video, takes priority)
+               and/or   landing/public/assets/hero-jaka-cobot-plc.jpg (photo; also used as the video poster)
+               then run `npm run build`. The "LIVE LAB SETUP" badge only appears once one of these real files exists. -->
+          <figure class="media-card" id="hero-media">
+            <span class="media-badge media-badge-live" hidden><span class="live-dot" aria-hidden="true"></span>Live lab setup &middot; Hyderabad Center</span>
+            <span class="media-badge media-badge-fallback">JAKA 6-axis cobot training cell</span>
+
+            <!-- Fallback until real media is added: JAKA product image (cut out) -->
+            <img class="media-fallback" src="assets/photos/hero-jaka-cobot-cutout.webp" width="929" height="1080"
+                 alt="JAKA 6-axis collaborative robot training cell with PLC control panel and teach pendant" />
+
+            <!-- Real media, inserted by the page script when the files exist (avoids broken images) -->
+            <template id="hero-media-video">
+              <video class="media-real" autoplay loop muted playsinline preload="metadata"
+                     aria-label="Students working on a JAKA cobot cell with a PLC panel in the Hyderabad lab">
+                <source src="assets/hero-lab-demo.mp4" type="video/mp4" />
+              </video>
+            </template>
+            <template id="hero-media-photo">
+              <img class="media-real" src="assets/hero-jaka-cobot-plc.jpg"
+                   alt="Student programming a 6-axis JAKA cobot with PLC control panel and HMI in Hyderabad lab" />
+            </template>
+          </figure>
         </div>
       </div>
     </section>
@@ -195,7 +214,7 @@
     <!-- =====================================================================
          3. TRUST – The lab & hardware (high-contrast)
          ===================================================================== -->
-    <section class="section theme-light" id="tech">
+    <section class="section theme-light" id="lab">
       <div class="container">
         <p class="eyebrow">The lab &amp; hardware</p>
         <h2>The same hardware you will find on the plant floor</h2>

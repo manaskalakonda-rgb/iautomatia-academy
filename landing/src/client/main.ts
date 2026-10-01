@@ -178,14 +178,23 @@ function initEnquiryForm(): void {
 // ---------- Photos ----------
 // assets/photos/manifest.json (written by `npm run build`) lists the photo files,
 // so the page only requests photos that exist.
-let photoList: Promise<string[]> | null = null;
+interface MediaManifest {
+  files: string[];
+  hero: string[];
+}
 
-function listPhotos(): Promise<string[]> {
-  photoList ??= fetch("assets/photos/manifest.json", { cache: "no-cache" })
-    .then((res) => (res.ok ? (res.json() as Promise<{ files: string[] }>) : { files: [] }))
-    .then((body) => body.files)
-    .catch(() => []);
-  return photoList;
+let manifest: Promise<MediaManifest> | null = null;
+
+function loadManifest(): Promise<MediaManifest> {
+  manifest ??= fetch("assets/photos/manifest.json", { cache: "no-cache" })
+    .then((res): Promise<Partial<MediaManifest>> | Partial<MediaManifest> => (res.ok ? (res.json() as Promise<Partial<MediaManifest>>) : {}))
+    .then((body) => ({ files: body.files ?? [], hero: body.hero ?? [] }))
+    .catch(() => ({ files: [], hero: [] }));
+  return manifest;
+}
+
+async function listPhotos(): Promise<string[]> {
+  return (await loadManifest()).files;
 }
 
 /** Resolves with the URL of assets/photos/<name>.<ext> for the first extension that exists, or null. */
@@ -212,6 +221,28 @@ function initPhotoSlots(): void {
     box.classList.add("has-photo");
     if (box.dataset.fit === "contain") box.classList.add("fit-contain");
   });
+}
+
+// Hero media card: real lab video/photo when present, otherwise the JAKA product fallback.
+// The "Live lab setup" badge is shown only for real lab media.
+async function initHeroMedia(): Promise<void> {
+  const card = document.getElementById("hero-media");
+  if (!card) return;
+  const { hero } = await loadManifest();
+  const hasVideo = hero.includes("hero-lab-demo.mp4");
+  const hasPhoto = hero.includes("hero-jaka-cobot-plc.jpg");
+  if (!hasVideo && !hasPhoto) return;
+
+  const template = document.getElementById(hasVideo ? "hero-media-video" : "hero-media-photo") as HTMLTemplateElement | null;
+  const media = template?.content.firstElementChild?.cloneNode(true) as HTMLElement | undefined;
+  if (!media) return;
+  if (media instanceof HTMLVideoElement && hasPhoto) media.poster = "assets/hero-jaka-cobot-plc.jpg";
+
+  card.querySelector(".media-fallback")?.remove();
+  card.querySelector(".media-badge-fallback")?.remove();
+  card.querySelector<HTMLElement>(".media-badge-live")?.removeAttribute("hidden");
+  card.classList.add("has-real-media");
+  card.appendChild(media);
 }
 
 // Hero background slideshow: assets/photos/hero-bg-1, hero-bg-2, ... until the first missing number.
@@ -274,6 +305,7 @@ function initYear(): void {
 initNav();
 initEnquiryForm();
 initPhotoSlots();
+void initHeroMedia();
 void initHeroSlideshow();
 initVideos();
 initYear();
