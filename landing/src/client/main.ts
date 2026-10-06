@@ -181,7 +181,7 @@ function initEnquiryForm(): void {
 // so the page only requests photos that exist.
 interface MediaManifest {
   files: string[];
-  hero: string[];
+  media: string[];
 }
 
 let manifest: Promise<MediaManifest> | null = null;
@@ -189,8 +189,8 @@ let manifest: Promise<MediaManifest> | null = null;
 function loadManifest(): Promise<MediaManifest> {
   manifest ??= fetch("assets/photos/manifest.json", { cache: "no-cache" })
     .then((res): Promise<Partial<MediaManifest>> | Partial<MediaManifest> => (res.ok ? (res.json() as Promise<Partial<MediaManifest>>) : {}))
-    .then((body) => ({ files: body.files ?? [], hero: body.hero ?? [] }))
-    .catch(() => ({ files: [], hero: [] }));
+    .then((body) => ({ files: body.files ?? [], media: body.media ?? [] }))
+    .catch(() => ({ files: [], media: [] }));
   return manifest;
 }
 
@@ -220,30 +220,67 @@ function initPhotoSlots(): void {
     img.loading = "lazy";
     box.replaceChildren(img);
     box.classList.add("has-photo");
-    if (box.dataset.fit === "contain") box.classList.add("fit-contain");
+    box.classList.remove("ph-cutout");
+    box.classList.toggle("fit-contain", box.dataset.fit === "contain");
   });
 }
 
-// Hero media card: real lab video/photo when present, otherwise the JAKA product fallback.
-// The "Live lab setup" badge is shown only for real lab media.
-async function initHeroMedia(): Promise<void> {
-  const card = document.getElementById("hero-media");
-  if (!card) return;
-  const { hero } = await loadManifest();
-  const hasVideo = hero.includes("hero-lab-demo.mp4");
-  const hasPhoto = hero.includes("hero-jaka-cobot-plc.jpg");
-  if (!hasVideo && !hasPhoto) return;
+// Section background video: the <template> inside the section's background layer, used when its
+// file is in assets/. Small screens, reduced motion and data saver get the poster still instead,
+// so they never download the video. `lazy` waits until the section is near the viewport.
+// Returns true if a background was set up.
+interface BgVideo {
+  section: string;
+  layer: string;
+  video: string;
+  poster: string;
+  lazy?: boolean;
+}
 
-  const template = document.getElementById(hasVideo ? "hero-media-video" : "hero-media-photo") as HTMLTemplateElement | null;
-  const media = template?.content.firstElementChild?.cloneNode(true) as HTMLElement | undefined;
-  if (!media) return;
-  if (media instanceof HTMLVideoElement && hasPhoto) media.poster = "assets/hero-jaka-cobot-plc.jpg";
+async function initBgVideo({ section, layer, video: file, poster, lazy = false }: BgVideo): Promise<boolean> {
+  const host = $<HTMLElement>(section);
+  const bg = host ? $<HTMLElement>(layer, host) : null;
+  const template = bg ? $<HTMLTemplateElement>("template", bg) : null;
+  if (!host || !bg || !template) return false;
+  const { media } = await loadManifest();
+  if (!media.includes(file)) return false;
 
-  card.querySelector(".media-fallback")?.remove();
-  card.querySelector(".media-badge-fallback")?.remove();
-  card.querySelector<HTMLElement>(".media-badge-live")?.removeAttribute("hidden");
-  card.classList.add("has-real-media");
-  card.appendChild(media);
+  const video = template.content.firstElementChild?.cloneNode(true);
+  if (!(video instanceof HTMLVideoElement)) return false;
+
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  const useStill =
+    window.matchMedia?.("(max-width: 640px), (prefers-reduced-motion: reduce)").matches || connection?.saveData === true;
+
+  let el: HTMLElement = video;
+  if (useStill) {
+    if (!media.includes(poster)) return false;
+    const img = new Image();
+    img.src = video.poster;
+    img.alt = "";
+    img.className = video.className;
+    el = img;
+  }
+  const show = (): void => {
+    bg.appendChild(el);
+    if (el instanceof HTMLVideoElement) void el.play().catch(() => undefined); // autoplay can be refused; the poster stays visible
+  };
+
+  host.classList.add("has-video");
+  if (lazy && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        observer.disconnect();
+        show();
+      },
+      { rootMargin: "300px 0px" },
+    );
+    observer.observe(host);
+  } else {
+    show();
+  }
+  return true;
 }
 
 // Hero background slideshow: assets/photos/hero-bg-1, hero-bg-2, ... until the first missing number.
@@ -280,23 +317,6 @@ async function initHeroSlideshow(): Promise<void> {
   }, 5000);
 }
 
-// ---------- YouTube: load the player only when clicked ----------
-function initVideos(): void {
-  $$<HTMLElement>(".video-frame[data-youtube]").forEach((frame) => {
-    const btn = $<HTMLButtonElement>(".video-play", frame);
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://www.youtube-nocookie.com/embed/${frame.dataset.youtube}?autoplay=1&rel=0`;
-      iframe.title = frame.dataset.title ?? "Video";
-      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-      iframe.referrerPolicy = "strict-origin-when-cross-origin";
-      iframe.allowFullscreen = true;
-      btn.replaceWith(iframe);
-    });
-  });
-}
-
 // ---------- Footer year ----------
 function initYear(): void {
   const year = document.getElementById("year");
@@ -306,7 +326,7 @@ function initYear(): void {
 initNav();
 initEnquiryForm();
 initPhotoSlots();
-void initHeroMedia();
-void initHeroSlideshow();
-initVideos();
+void initBgVideo({ section: ".hero", layer: ".hero-bg", video: "hero-bg-video.mp4", poster: "hero-bg-poster.jpg" })
+  .then((shown) => (shown ? undefined : initHeroSlideshow()));
+void initBgVideo({ section: "#lab", layer: ".section-bg", video: "lab-bg-video.mp4", poster: "lab-bg-poster.jpg", lazy: true });
 initYear();

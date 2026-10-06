@@ -14,7 +14,17 @@ Tips: landscape photos about 1600 px wide work best; keep each file under ~500 K
 Only use photos you took yourself or have permission to use (e.g. JAKA's official
 media kit with their written OK).
 
-HERO BACKGROUND SLIDESHOW (behind the headline)
+HERO BACKGROUND VIDEO (behind the headline, takes priority over the slideshow)
+  landing/public/assets/hero-bg-video.mp4   looping, muted ambient video (shown dimmed under a dark overlay)
+  landing/public/assets/hero-bg-poster.jpg  still frame, shown while the video loads and instead of the
+                                            video on phones (<= 640 px), reduced motion and data saver
+  Keep the video short of title cards/logo screens, ~720p, no audio, under ~8 MB.
+
+LAB SECTION BACKGROUND VIDEO (behind "The same hardware you will find on the plant floor")
+  landing/public/assets/lab-bg-video.mp4    same rules as the hero video; only loads when the section
+  landing/public/assets/lab-bg-poster.jpg   scrolls near, and phones get the poster still instead
+
+HERO BACKGROUND SLIDESHOW (behind the headline, used when there is no hero-bg-video.mp4)
   hero-bg-1, hero-bg-2, hero-bg-3 ... (up to 8, numbered with no gaps)
   The photos cross-fade every 5 seconds under a dark-blue overlay so the text stays readable.
   With no hero-bg files, the hero keeps its light design.

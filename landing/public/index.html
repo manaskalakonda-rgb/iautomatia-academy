@@ -40,11 +40,19 @@
          1. ATTENTION – Hero
          ===================================================================== -->
     <section class="hero theme-dark">
-      <!-- Background slideshow: add assets/photos/hero-bg-1.jpg, hero-bg-2.jpg ... to turn it on -->
-      <div class="hero-bg" aria-hidden="true"></div>
+      <!-- Background: assets/hero-bg-video.mp4 when present (poster still on small screens / reduced motion),
+           otherwise the slideshow from assets/photos/hero-bg-1.jpg, hero-bg-2.jpg ... -->
+      <div class="hero-bg" aria-hidden="true">
+        <template id="hero-bg-video">
+          <video class="bg-video" autoplay loop muted playsinline preload="auto" poster="assets/hero-bg-poster.jpg"
+                 disablepictureinpicture tabindex="-1">
+            <source src="assets/hero-bg-video.mp4" type="video/mp4" />
+          </video>
+        </template>
+      </div>
+      <div class="hero-overlay" aria-hidden="true"></div>
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow pill">Industrial Automation Training &middot; Hyderabad</p>
           <h1>Program real robots,<br /><span class="accent">not simulators.</span></h1>
           <p class="lead">Hands-on training with real JAKA cobots, Siemens, Mitsubishi &amp; Allen-Bradley PLCs.</p>
 
@@ -59,33 +67,6 @@
             <a href="#enquire" class="btn btn-accent btn-lg">See the Lab in Action</a>
             <a href="#programs" class="btn btn-ghost btn-lg">View Programs</a>
           </div>
-        </div>
-
-        <div class="hero-media">
-          <!-- INSERT REAL PHOTOGRAPH/VIDEO HERE: Student + JAKA Cobot + PLC Panel + Laptop/HMI. Avoid stock imagery.
-               Save as  landing/public/assets/hero-lab-demo.mp4      (video, takes priority)
-               and/or   landing/public/assets/hero-jaka-cobot-plc.jpg (photo; also used as the video poster)
-               then run `npm run build`. The "LIVE LAB SETUP" badge only appears once one of these real files exists. -->
-          <figure class="media-card" id="hero-media">
-            <span class="media-badge media-badge-live" hidden><span class="live-dot" aria-hidden="true"></span>Live lab setup &middot; Hyderabad Center</span>
-            <span class="media-badge media-badge-fallback">JAKA 6-axis cobot training cell</span>
-
-            <!-- Fallback until real media is added: JAKA product image (cut out) -->
-            <img class="media-fallback" src="assets/photos/hero-jaka-cobot-cutout.webp" width="929" height="1080"
-                 alt="JAKA 6-axis collaborative robot training cell with PLC control panel and teach pendant" />
-
-            <!-- Real media, inserted by the page script when the files exist (avoids broken images) -->
-            <template id="hero-media-video">
-              <video class="media-real" autoplay loop muted playsinline preload="metadata"
-                     aria-label="Students working on a JAKA cobot cell with a PLC panel in the Hyderabad lab">
-                <source src="assets/hero-lab-demo.mp4" type="video/mp4" />
-              </video>
-            </template>
-            <template id="hero-media-photo">
-              <img class="media-real" src="assets/hero-jaka-cobot-plc.jpg"
-                   alt="Student programming a 6-axis JAKA cobot with PLC control panel and HMI in Hyderabad lab" />
-            </template>
-          </figure>
         </div>
       </div>
     </section>
@@ -214,7 +195,17 @@
     <!-- =====================================================================
          3. TRUST – The lab & hardware (high-contrast)
          ===================================================================== -->
-    <section class="section theme-light" id="lab">
+    <section class="section section-video theme-dark" id="lab">
+      <!-- Background: assets/lab-bg-video.mp4, loaded when the section scrolls near (poster still on small screens) -->
+      <div class="section-bg" aria-hidden="true">
+        <template>
+          <video class="bg-video" autoplay loop muted playsinline preload="auto" poster="assets/lab-bg-poster.jpg"
+                 disablepictureinpicture tabindex="-1">
+            <source src="assets/lab-bg-video.mp4" type="video/mp4" />
+          </video>
+        </template>
+      </div>
+      <div class="section-overlay" aria-hidden="true"></div>
       <div class="container">
         <p class="eyebrow">The lab &amp; hardware</p>
         <h2>The same hardware you will find on the plant floor</h2>
@@ -222,7 +213,11 @@
 
         <div class="tech-grid">
           <article class="tech-card">
-            <div class="ph ph-card" data-photo="jaka-cobot-cell" data-alt="JAKA 6-axis cobot cell with gripper"><span class="ph-tag">Image placeholder</span><span class="ph-label">PHOTO: JAKA 6-axis cobot cell with gripper</span></div>
+            <!-- JAKA product cut-out until a real lab photo (assets/photos/jaka-cobot-cell.jpg) replaces it -->
+            <div class="ph ph-card has-photo fit-contain ph-cutout" data-photo="jaka-cobot-cell" data-alt="JAKA 6-axis cobot cell with gripper">
+              <img class="ph-img" src="assets/photos/hero-jaka-cobot-cutout.webp" width="929" height="1080" loading="lazy"
+                   alt="JAKA 6-axis collaborative robot training cell with PLC control panel and teach pendant" />
+            </div>
             <span class="tech-badge">6-axis &middot; fence-less</span>
             <h3>JAKA cobots</h3>
             <ul class="mini-list">
@@ -261,25 +256,6 @@
               <li>Link fault diagnosis</li>
             </ul>
           </article>
-        </div>
-
-        <div class="video-block">
-          <div class="video-copy">
-            <p class="eyebrow">Watch</p>
-            <h3>The JAKA education cobot in action</h3>
-            <ul class="mini-list">
-              <li>6-axis cobot + control panel</li>
-              <li>Vision built in</li>
-              <li>Made for hands-on learning</li>
-            </ul>
-            <p class="note">Video: JAKA Robotics (official YouTube channel).</p>
-          </div>
-          <div class="video-frame" data-youtube="iY9yTzu4i1Q" data-title="Unboxing! How can students use JAKA Education Package to explore robotics vision technology?">
-            <button type="button" class="video-play" aria-label="Play video: JAKA Education Package unboxing">
-              <img src="https://i.ytimg.com/vi/iY9yTzu4i1Q/hqdefault.jpg" alt="" loading="lazy" />
-              <span class="play-icon" aria-hidden="true"></span>
-            </button>
-          </div>
         </div>
 
         <div class="section-end-cta">
