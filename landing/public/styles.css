@@ -137,15 +137,15 @@ img { max-width: 100%; display: block; }
 }
 
 /* ---------- Shared card behaviour: steel 1px border, orange on hover ---------- */
-.value-card, .audience-card, .tech-card, .project-card, .program-card, .phase-card, .career-row, .cta-strip {
+.value-card, .audience-card, .tech-card, .program-card, .phase-card, .career-row, .cta-strip {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
-.value-card, .audience-card, .tech-card, .project-card, .program-card, .phase-card {
+.value-card, .audience-card, .tech-card, .program-card, .phase-card {
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
-.value-card:hover, .audience-card:hover, .tech-card:hover, .project-card:hover, .program-card:hover, .phase-card:hover {
+.value-card:hover, .audience-card:hover, .tech-card:hover, .program-card:hover, .phase-card:hover {
   border-color: var(--color-orange); box-shadow: var(--glow);
 }
 
@@ -154,7 +154,7 @@ img { max-width: 100%; display: block; }
   font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--on-orange); background: var(--color-orange); border-radius: 5px; padding: 4px 10px;
 }
-.tech-badge, .built-tag, .career-tag {   /* spec badges: steel outline */
+.tech-badge, .career-tag {   /* spec badges: steel outline */
   display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--muted); border: 1px solid var(--border); border-radius: 5px; padding: 3px 8px; white-space: nowrap;
 }
@@ -238,11 +238,12 @@ code, .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; f
 
 .hero-bg { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 /* Ambient background video (or its poster still on small screens): dimmed, then darkened by the overlay */
-.bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.6; }
-.hero-overlay { display: none; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(15, 17, 21, 0.45) 0%, rgba(15, 17, 21, 0.7) 100%); }
+.bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.7; }
+.hero-overlay { display: none; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(15, 17, 21, 0.25) 0%, rgba(15, 17, 21, 0.5) 100%); }
 /* With the video, the hero fills the screen below the sticky header (72px + 1px rule) */
 .hero.has-video { background: #0f1115; display: flex; align-items: center; min-height: calc(100vh - 73px); min-height: calc(100svh - 73px); }
 .hero.has-video .hero-overlay { display: block; }
+.hero.has-video h1, .hero.has-video .lead { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55); }   /* keeps copy readable over bright footage */
 .hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transform: scale(1.06); transition: opacity 1.4s ease, transform 7s ease; }
 .hero-slide.active { opacity: 1; transform: scale(1); }
 .hero.has-bg .hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(23,25,28,0.95) 0%, rgba(23,25,28,0.85) 45%, rgba(23,25,28,0.55) 100%); }
@@ -294,22 +295,25 @@ code, .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; f
 /* Section with an ambient background video (Lab): video (1), dark overlay (2), content (3) */
 .section-video { position: relative; overflow: hidden; }
 .section-bg { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.section-overlay { display: none; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(15, 17, 21, 0.55) 0%, rgba(15, 17, 21, 0.75) 100%); }
+.section-overlay { display: none; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(15, 17, 21, 0.35) 0%, rgba(15, 17, 21, 0.55) 100%); }
 .section-video.has-video { background: #0f1115; }
 .section-video.has-video .section-overlay { display: block; }
 .section-video > .container { position: relative; z-index: 3; }
 
+.section-video .section-lead, #projects .section-lead { color: var(--fg-2); }   /* brighter lead line (Lab reads over the video) */
+
 /* ---------- 4. Projects / proof ---------- */
-.project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 26px; }
-.project-card { padding: 24px; display: flex; flex-direction: column; }
-.project-card h3 { font-size: 1.2rem; }
-.project-card .ticks { margin: 0; }
-.project-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
-.project-level { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 26px; }
-.section-careers { padding-bottom: 0; }   /* flows straight into the dark FAQ section below */
+/* Career support: dark block (grid texture) between the light form and the light FAQ */
+.section-careers {
+  background:
+    linear-gradient(rgba(139, 146, 152, 0.07) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(139, 146, 152, 0.07) 1px, transparent 1px) 0 0 / 44px 44px,
+    #141619;
+}
+.careers-title { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.careers-title .career-tag { letter-spacing: 0.1em; }
 .career-row { padding: 24px 26px; margin-bottom: 26px; }
-.career-row h3 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
 .career-items { list-style: none; padding: 0; margin: 0 0 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .career-items li { display: flex; flex-direction: column; gap: 2px; padding-left: 14px; border-left: 1px solid var(--border); }
 .career-items span { font-size: 0.9rem; color: var(--muted); }
@@ -341,13 +345,35 @@ code, .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; f
   background:
     radial-gradient(120% 55% at 50% 0%, rgba(255, 106, 0, 0.16), transparent 65%),
     linear-gradient(180deg, #23272c 0%, var(--color-graphite) 100%);
-  box-shadow: 0 28px 60px rgba(23, 25, 28, 0.35);
+  box-shadow: 0 28px 60px rgba(23, 25, 28, 0.35), 0 0 0 1px rgba(255, 106, 0, 0.35), 0 0 36px rgba(255, 106, 0, 0.18);
+  animation: featured-glow 3.2s ease-in-out infinite;
 }
+/* Shine: a soft light band sweeps across the card every few seconds (behind the content) */
+.program-card.program-featured::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.16) 48%, rgba(255, 190, 140, 0.22) 52%, transparent 62%) no-repeat;
+  background-size: 250% 100%; background-position: 160% 0;
+  animation: featured-sheen 5.5s ease-in-out infinite;
+}
+.program-featured > :not(.badge) { position: relative; z-index: 1; }
+.program-featured .price { color: var(--color-orange); }
 .program-featured .ticks li::before { border-color: var(--color-orange); }
 .program-featured .badge {
-  top: -16px; left: 50%; right: auto; transform: translateX(-50%); white-space: nowrap;
+  z-index: 2; top: -16px; left: 50%; right: auto; transform: translateX(-50%); white-space: nowrap;
   border-radius: 99px; padding: 8px 22px; font-size: 0.8rem; letter-spacing: 0.1em;
-  box-shadow: 0 6px 18px rgba(255, 106, 0, 0.35);
+  background: linear-gradient(135deg, #ff8a2b, var(--color-orange) 55%, #e05d00);
+  box-shadow: 0 6px 18px rgba(255, 106, 0, 0.45);
+}
+@keyframes featured-glow {
+  0%, 100% { box-shadow: 0 28px 60px rgba(23, 25, 28, 0.35), 0 0 0 1px rgba(255, 106, 0, 0.35), 0 0 28px rgba(255, 106, 0, 0.14); }
+  50%      { box-shadow: 0 28px 60px rgba(23, 25, 28, 0.35), 0 0 0 1px rgba(255, 106, 0, 0.7), 0 0 52px rgba(255, 106, 0, 0.32); }
+}
+@keyframes featured-sheen {
+  0%, 55% { background-position: 160% 0; }
+  100%    { background-position: -60% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .program-card.program-featured, .program-card.program-featured::before { animation: none; }
 }
 .badge { position: absolute; top: -12px; right: 20px; }
 
@@ -375,6 +401,9 @@ code, .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; f
 /* ---------- 6. Enquiry: graphite form container on the off-white section ---------- */
 .enquire-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .cta-lead { font-size: 1.15rem; font-weight: 700; color: var(--fg); }
+/* Enquiry copy: compact, two sizes only (heading + one text size for label, lead and list) */
+.enquire-copy h2 { font-size: clamp(1.35rem, 2vw, 1.6rem); max-width: 30ch; text-wrap: balance; }
+.enquire-copy .eyebrow, .enquire-copy .cta-lead, .enquire-copy .ticks { font-size: 0.95rem; }
 .enquiry-form {
   position: relative; border-radius: var(--radius); padding: 30px;
   border: 1px solid var(--color-graphite); border-top: 3px solid var(--color-orange);
@@ -454,7 +483,7 @@ button[disabled] { opacity: 0.6; cursor: progress; }
   .hero-grid, .enquire-grid { grid-template-columns: 1fr; }
   .hero-grid { gap: 36px; }
   .hero > .container { padding-inline: 20px; }
-  .program-grid, .audience-grid, .project-grid, .testimonial-row, .gallery, .career-items { grid-template-columns: 1fr; }
+  .program-grid, .audience-grid, .testimonial-row, .gallery, .career-items { grid-template-columns: 1fr; }
   .program-card.program-featured { margin-block: 14px 0; padding-block: 36px 28px; }   /* stacked: no lift, room for the badge */
   .logo-row { grid-template-columns: repeat(2, 1fr); }
   .section { padding: 64px 0; }
