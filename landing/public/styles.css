@@ -231,6 +231,8 @@ code, .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; f
 .hero-chips { list-style: none; padding: 0; margin: 0 0 6px; display: flex; flex-wrap: wrap; gap: 8px; }
 .hero-chips li { font-size: 0.84rem; font-weight: 600; color: var(--fg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin: 28px 0 36px; }
+.hero-cta { padding-inline: 34px; box-shadow: 0 10px 30px rgba(255, 106, 0, 0.45); transition: background 0.2s, box-shadow 0.2s, transform 0.2s; }
+.hero-cta:hover { box-shadow: 0 14px 38px rgba(255, 106, 0, 0.6); transform: translateY(-2px); }
 .hero-facts { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 18px 26px; }
 .hero-facts li { display: flex; flex-direction: column; padding-left: 14px; border-left: 2px solid var(--color-orange); }
 .hero-facts strong { font-size: 1.9rem; font-weight: 800; line-height: 1; }
@@ -249,6 +251,9 @@ code, .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; f
 .hero.has-bg .hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(23,25,28,0.95) 0%, rgba(23,25,28,0.85) 45%, rgba(23,25,28,0.55) 100%); }
 
 /* ---------- 2. Value cards ---------- */
+/* Follows the light Programs section: deeper beige band with lighter cards so the two read apart */
+.section-value { background: #e6e2d9; }
+.section-value .value-card { background: #f7f6f2; }
 .section-value h2 { max-width: 32ch; }
 .value-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
 .value-card { flex: 0 1 calc((100% - 44px) / 3); display: flex; flex-direction: column; padding: 24px 26px; }
