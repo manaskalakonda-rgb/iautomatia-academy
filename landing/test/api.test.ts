@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import type { AddressInfo } from "node:net";
 import os from "node:os";
 import path from "node:path";
@@ -11,8 +11,17 @@ let base = "";
 let dataDir = "";
 let close: () => void = () => {};
 
+const NOCODB_FORM = "https://app.nocodb.com/nc/form/5500795e-dd8f-4758-ae46-6c3625a4bdee";
+
+// Two enquiries saved by the old built-in form.
+const saved = [
+  { id: "1", createdAt: "2026-10-01T10:00:00.000Z", name: "Ravi Kumar", phone: "+919502318939", email: "ravi@example.com", program: "Specialist", status: "Working professional" },
+  { id: "2", createdAt: "2026-10-02T10:00:00.000Z", name: "Asha", phone: "+919502318940", email: "asha@example.com", program: "Foundation", status: "Student" },
+];
+
 before(async () => {
   dataDir = await mkdtemp(path.join(os.tmpdir(), "iautomatia-test-"));
+  await writeFile(path.join(dataDir, "enquiries.jsonl"), saved.map((e) => JSON.stringify(e)).join("\n") + "\n", "utf8");
   const app = createApp({
     publicDir: path.resolve("public"),
     store: new FileEnquiryStore(dataDir),
@@ -29,11 +38,6 @@ after(async () => {
   await rm(dataDir, { recursive: true, force: true });
 });
 
-const post = (body: unknown) =>
-  fetch(`${base}/api/enquiries`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-
-const valid = { name: "Ravi Kumar", phone: "9502318939", email: "ravi@example.com", program: "Specialist", status: "Working professional" };
-
 test("serves the landing page with security headers", async () => {
   const res = await fetch(`${base}/`);
   assert.equal(res.status, 200);
@@ -41,44 +45,24 @@ test("serves the landing page with security headers", async () => {
   assert.match(res.headers.get("content-security-policy") ?? "", /default-src 'self'/);
 });
 
-test("saves a valid enquiry", async () => {
-  const res = await post(valid);
-  assert.equal(res.status, 201);
-  const saved = (await readFile(path.join(dataDir, "enquiries.jsonl"), "utf8")).trim().split("\n");
-  assert.equal(saved.length, 1);
-  assert.equal(JSON.parse(saved[0]).phone, "+919502318939");
+test("embeds the NocoDB registration form instead of the old form", async () => {
+  const res = await fetch(`${base}/`);
+  const html = await res.text();
+  assert.match(html, new RegExp(`<iframe[^>]+src="${NOCODB_FORM}`));
+  assert.match(html, /Open Registration Form/);
+  assert.doesNotMatch(html, /id="enquiry-form"|<form\b/);
+  assert.match(res.headers.get("content-security-policy") ?? "", /frame-src [^;]*https:\/\/app\.nocodb\.com/);
 });
 
-test("rejects an invalid enquiry with field errors", async () => {
-  const res = await post({ ...valid, email: "not-an-email" });
-  assert.equal(res.status, 400);
-  const body = (await res.json()) as { errors: Record<string, string> };
-  assert.ok(body.errors.email);
+test("no longer accepts enquiries itself", async () => {
+  const res = await fetch(`${base}/api/enquiries`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
+  assert.equal(res.status, 404);
 });
 
-test("silently drops honeypot submissions", async () => {
-  const res = await post({ ...valid, website: "http://spam.example" });
-  assert.equal(res.status, 201);
-  const saved = (await readFile(path.join(dataDir, "enquiries.jsonl"), "utf8")).trim().split("\n");
-  assert.equal(saved.length, 1);
-});
-
-test("returns 400 for malformed JSON", async () => {
-  const res = await fetch(`${base}/api/enquiries`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{bad" });
-  assert.equal(res.status, 400);
-});
-
-test("rate-limits repeated submissions", async () => {
-  // 4 requests so far; the limit is 5 per 10 minutes per IP.
-  assert.equal((await post(valid)).status, 201);
-  assert.equal((await post(valid)).status, 429);
-});
-
-test("lists enquiries only with the admin token", async () => {
+test("lists past enquiries only with the admin token", async () => {
   assert.equal((await fetch(`${base}/api/enquiries`)).status, 401);
   const res = await fetch(`${base}/api/enquiries`, { headers: { Authorization: "Bearer secret-token" } });
   assert.equal(res.status, 200);
-  const body = (await res.json()) as { enquiries: unknown[] };
-  assert.equal(body.enquiries.length, 2);
+  const body = (await res.json()) as { enquiries: { id: string }[] };
+  assert.deepEqual(body.enquiries.map((e) => e.id), ["2", "1"]); // newest first
 });
-

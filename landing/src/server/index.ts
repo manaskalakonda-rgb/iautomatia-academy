@@ -16,10 +16,9 @@ const app = createApp({
   publicDir: path.join(root, "public"),
   store,
   adminToken: process.env.ADMIN_TOKEN || undefined,
-  trustProxy: process.env.TRUST_PROXY === "true",
 });
 
 app.listen(port, () => {
   console.log(`iAutomatia Academy site running at http://localhost:${port}`);
-  console.log(`Enquiries are saved to: ${description}`);
+  console.log(`Past enquiries (GET /api/enquiries) are read from: ${description}`);
 });

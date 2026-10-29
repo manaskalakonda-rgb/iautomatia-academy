@@ -1,24 +1,22 @@
-// Enquiry storage.
-// - Locally: one JSON object per line in data/enquiries.jsonl (no setup needed).
+// Enquiries saved by the site's old built-in form. New enquiries go to the NocoDB form, so this is read-only.
+// - Locally: one JSON object per line in data/enquiries.jsonl.
 // - On Vercel (or any host with DATABASE_URL / POSTGRES_URL): a Postgres table, e.g. Neon.
-import { randomUUID } from "node:crypto";
-import { appendFile, mkdir, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { neon } from "@neondatabase/serverless";
-import type { Enquiry } from "../shared/enquiry.js";
 
-export interface StoredEnquiry extends Enquiry {
+export interface StoredEnquiry {
   id: string;
   createdAt: string;
+  name: string;
+  phone: string;
+  email: string;
+  program: string;
+  status: string;
 }
 
 export interface EnquiryStore {
-  add(enquiry: Enquiry): Promise<StoredEnquiry>;
   list(): Promise<StoredEnquiry[]>;
-}
-
-function newRecord(enquiry: Enquiry): StoredEnquiry {
-  return { id: randomUUID(), createdAt: new Date().toISOString(), ...enquiry };
 }
 
 export class FileEnquiryStore implements EnquiryStore {
@@ -30,13 +28,6 @@ export class FileEnquiryStore implements EnquiryStore {
 
   describe(): string {
     return this.file;
-  }
-
-  async add(enquiry: Enquiry): Promise<StoredEnquiry> {
-    const record = newRecord(enquiry);
-    await mkdir(path.dirname(this.file), { recursive: true });
-    await appendFile(this.file, JSON.stringify(record) + "\n", "utf8");
-    return record;
   }
 
   async list(): Promise<StoredEnquiry[]> {
@@ -61,8 +52,8 @@ interface EnquiryRow {
   name: string;
   phone: string;
   email: string;
-  program: Enquiry["program"];
-  status: Enquiry["status"];
+  program: string;
+  status: string;
 }
 
 export class PostgresEnquiryStore implements EnquiryStore {
@@ -91,15 +82,6 @@ export class PostgresEnquiryStore implements EnquiryStore {
     return this.ready;
   }
 
-  async add(enquiry: Enquiry): Promise<StoredEnquiry> {
-    await this.ensureTable();
-    const record = newRecord(enquiry);
-    await this.sql`
-      INSERT INTO enquiries (id, created_at, name, phone, email, program, status)
-      VALUES (${record.id}, ${record.createdAt}, ${record.name}, ${record.phone}, ${record.email}, ${record.program}, ${record.status})`;
-    return record;
-  }
-
   async list(): Promise<StoredEnquiry[]> {
     await this.ensureTable();
     const rows = (await this.sql`
@@ -117,16 +99,10 @@ export class PostgresEnquiryStore implements EnquiryStore {
   }
 }
 
-/** Used on Vercel when no database is connected: fails loudly instead of losing enquiries. */
+/** Used on Vercel when no database is connected: functions keep no files, so there is nothing to read. */
 class MissingDatabaseStore implements EnquiryStore {
-  private fail(): never {
-    throw new Error("No database configured: set DATABASE_URL (e.g. connect Neon Postgres in Vercel → Storage).");
-  }
-  async add(): Promise<StoredEnquiry> {
-    return this.fail();
-  }
   async list(): Promise<StoredEnquiry[]> {
-    return this.fail();
+    throw new Error("No database configured: set DATABASE_URL (e.g. connect Neon Postgres in Vercel → Storage).");
   }
 }
 
@@ -134,10 +110,7 @@ class MissingDatabaseStore implements EnquiryStore {
 export function createStore(env: NodeJS.ProcessEnv, defaultDataDir: string): { store: EnquiryStore; description: string } {
   const url = env.DATABASE_URL || env.POSTGRES_URL;
   if (url) return { store: new PostgresEnquiryStore(url), description: "Postgres (DATABASE_URL)" };
-  if (env.VERCEL) {
-    console.error("[store] DATABASE_URL is not set – enquiries cannot be saved on Vercel.");
-    return { store: new MissingDatabaseStore(), description: "none (DATABASE_URL missing)" };
-  }
+  if (env.VERCEL) return { store: new MissingDatabaseStore(), description: "none (DATABASE_URL missing)" };
   const fileStore = new FileEnquiryStore(env.DATA_DIR ?? defaultDataDir);
   return { store: fileStore, description: fileStore.describe() };
 }

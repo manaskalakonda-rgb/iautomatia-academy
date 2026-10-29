@@ -238,7 +238,7 @@
               <li>Cobot safety &amp; teach pendant</li>
               <li>Basic pick-and-place on a real cobot</li>
             </ul>
-            <a href="#enquire" class="btn btn-ghost btn-block" data-program="Foundation">Book Demo for Foundation</a>
+            <a href="#enquire" class="btn btn-ghost btn-block">Book Demo for Foundation</a>
           </article>
 
           <article class="program-card program-featured theme-dark">
@@ -260,7 +260,7 @@
               <li>Vision-guided pick-and-place</li>
               <li>Grippers &amp; end-of-arm tooling</li>
             </ul>
-            <a href="#enquire" class="btn btn-accent btn-block" data-program="Integrator">Book Demo for Integrator</a>
+            <a href="#enquire" class="btn btn-accent btn-block">Book Demo for Integrator</a>
           </article>
 
           <article class="program-card">
@@ -282,7 +282,7 @@
               <li>Mentored capstone project</li>
               <li>Interview prep &amp; placement support</li>
             </ul>
-            <a href="#enquire" class="btn btn-ghost btn-block" data-program="Specialist">Book Demo for Specialist</a>
+            <a href="#enquire" class="btn btn-ghost btn-block">Book Demo for Specialist</a>
           </article>
         </div>
       </div>
@@ -433,7 +433,7 @@
     </section>
 
     <!-- =====================================================================
-         6. ENQUIRY – Free demo form
+         6. ENQUIRY – Registration form (NocoDB)
          ===================================================================== -->
     <section class="section theme-light" id="enquire">
       <div class="container enquire-grid">
@@ -447,50 +447,11 @@
           </ul>
         </div>
 
-        <!-- Validated in the browser and again by the Node.js server (POST /api/enquiries). -->
-        <form class="enquiry-form theme-dark" id="enquiry-form" novalidate>
-          <div class="field">
-            <label for="name">Full name</label>
-            <input type="text" id="name" name="name" autocomplete="name" required />
-            <p class="error" id="name-error" aria-live="polite"></p>
-          </div>
-          <div class="field">
-            <label for="phone">Mobile number</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="10-digit mobile" required />
-            <p class="error" id="phone-error" aria-live="polite"></p>
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" autocomplete="email" required />
-            <p class="error" id="email-error" aria-live="polite"></p>
-          </div>
-          <div class="field">
-            <label for="program">Program of interest</label>
-            <select id="program" name="program" required>
-              <option value="">Select a program</option>
-              <option value="Foundation">Foundation &mdash; 4 weeks &mdash; &#8377;35,000</option>
-              <option value="Integrator">Integrator &mdash; 8 weeks &mdash; &#8377;65,000</option>
-              <option value="Specialist">Specialist &mdash; 12 weeks &mdash; &#8377;95,000</option>
-              <option value="Not sure">Not sure yet &mdash; help me choose</option>
-            </select>
-            <p class="error" id="program-error" aria-live="polite"></p>
-          </div>
-          <fieldset class="field">
-            <legend>I am a</legend>
-            <div class="radio-row">
-              <label class="radio"><input type="radio" name="status" value="Student" /> Student</label>
-              <label class="radio"><input type="radio" name="status" value="Working professional" /> Working professional</label>
-            </div>
-            <p class="error" id="status-error" aria-live="polite"></p>
-          </fieldset>
-          <!-- Honeypot: hidden from people, filled only by spam bots. -->
-          <div class="hp" aria-hidden="true">
-            <label for="website">Website</label>
-            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
-          </div>
-          <button type="submit" class="btn btn-accent btn-block btn-lg btn-mono-label">Book Free Lab Demo</button>
-          <p class="form-success" id="form-success" role="status" hidden></p>
-        </form>
+        <!-- Registration form hosted on NocoDB, embedded here (frame-src in the CSP allows app.nocodb.com). -->
+        <div class="enquiry-form enquiry-embed theme-dark">
+          <iframe class="enquiry-frame" src="https://app.nocodb.com/nc/form/5500795e-dd8f-4758-ae46-6c3625a4bdee?nc-theme=dark" title="iAutomatia Academy registration form" loading="lazy"></iframe>
+          <p class="enquiry-fallback">Form not loading? <a href="https://app.nocodb.com/nc/form/5500795e-dd8f-4758-ae46-6c3625a4bdee?nc-theme=light" target="_blank" rel="noopener">Open Registration Form &rarr;</a></p>
+        </div>
       </div>
     </section>
 

@@ -8,5 +8,4 @@ const { store } = createStore(process.env, "/tmp/data");
 export default createApp({
   store,
   adminToken: process.env.ADMIN_TOKEN || undefined,
-  trustProxy: true, // Vercel sits in front of the function and sets X-Forwarded-For
 });

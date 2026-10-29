@@ -1,6 +1,5 @@
 // iAutomatia Academy – landing page interactions (no frameworks).
 // Compiled to public/js/client/main.js and loaded as an ES module.
-import { FIELD_VALIDATORS, type EnquiryField, type FieldErrors } from "../shared/enquiry.js";
 
 const PHOTO_EXTS = ["jpg", "jpeg", "png", "webp"] as const;
 
@@ -47,132 +46,6 @@ function initNav(): void {
     const href = a.getAttribute("href");
     const section = href ? document.querySelector(href) : null;
     if (section) observer.observe(section);
-  });
-}
-
-// ---------- Enquiry form ----------
-type FieldElement = HTMLInputElement | HTMLSelectElement;
-
-function initEnquiryForm(): void {
-  const form = document.getElementById("enquiry-form") as HTMLFormElement | null;
-  const success = document.getElementById("form-success");
-  if (!form || !success) return;
-
-  const submitBtn = $<HTMLButtonElement>('button[type="submit"]', form);
-  const submitLabel = submitBtn?.textContent ?? "";
-  const textFields: EnquiryField[] = ["name", "phone", "email", "program"];
-
-  const fieldEl = (name: EnquiryField): FieldElement | null =>
-    name === "status" ? $<HTMLInputElement>('input[name="status"]', form) : (form.elements.namedItem(name) as FieldElement | null);
-
-  const fieldValue = (name: EnquiryField): string => {
-    if (name === "status") return $<HTMLInputElement>('input[name="status"]:checked', form)?.value ?? "";
-    return fieldEl(name)?.value ?? "";
-  };
-
-  const showError = (name: EnquiryField, message: string): void => {
-    const id = name + "-error";
-    const errorEl = document.getElementById(id);
-    if (errorEl) errorEl.textContent = message;
-    if (name === "status") return;
-    const el = fieldEl(name);
-    if (!el) return;
-    el.classList.toggle("invalid", Boolean(message));
-    if (message) {
-      el.setAttribute("aria-invalid", "true");
-      el.setAttribute("aria-describedby", id);
-    } else {
-      el.removeAttribute("aria-invalid");
-    }
-  };
-
-  const validateField = (name: EnquiryField): boolean => {
-    const message = FIELD_VALIDATORS[name](fieldValue(name));
-    showError(name, message);
-    return !message;
-  };
-
-  const showErrors = (errors: FieldErrors): void => {
-    (Object.keys(FIELD_VALIDATORS) as EnquiryField[]).forEach((name) => showError(name, errors[name] ?? ""));
-  };
-
-  textFields.forEach((name) => {
-    const el = fieldEl(name);
-    if (!el) return;
-    el.addEventListener("blur", () => {
-      if (el.value) validateField(name);
-    });
-    el.addEventListener("input", () => {
-      if (el.classList.contains("invalid")) validateField(name);
-    });
-  });
-  $$<HTMLInputElement>('input[name="status"]', form).forEach((r) => r.addEventListener("change", () => validateField("status")));
-
-  // Program "Enquire" buttons pre-select the program in the form.
-  $$<HTMLElement>("[data-program]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const select = fieldEl("program");
-      if (select) select.value = btn.getAttribute("data-program") ?? "";
-      showError("program", "");
-    });
-  });
-
-  const setMessage = (text: string, isError: boolean): void => {
-    success.textContent = text;
-    success.classList.toggle("form-error", isError);
-    success.hidden = false;
-  };
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    success.hidden = true;
-
-    const fields = Object.keys(FIELD_VALIDATORS) as EnquiryField[];
-    const invalid = fields.filter((name) => !validateField(name));
-    if (invalid.length > 0) {
-      fieldEl(invalid[0])?.focus();
-      return;
-    }
-
-    const payload = {
-      name: fieldValue("name"),
-      phone: fieldValue("phone"),
-      email: fieldValue("email"),
-      program: fieldValue("program"),
-      status: fieldValue("status"),
-      website: (form.elements.namedItem("website") as HTMLInputElement | null)?.value ?? "", // honeypot
-    };
-
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Sending…";
-    }
-
-    try {
-      const res = await fetch("/api/enquiries", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const body = (await res.json().catch(() => ({}))) as { errors?: FieldErrors; message?: string };
-
-      if (res.ok) {
-        const firstName = payload.name.trim().split(" ")[0];
-        setMessage(`Thanks, ${firstName}! Your demo request is received. Our counsellor will call you to confirm a slot.`, false);
-        form.reset();
-      } else if (res.status === 400 && body.errors) {
-        showErrors(body.errors);
-      } else {
-        setMessage(body.message ?? "Sorry, something went wrong. Please try again or message us on WhatsApp.", true);
-      }
-    } catch {
-      setMessage("Could not reach the server. Please check your connection or message us on WhatsApp.", true);
-    } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = submitLabel;
-      }
-    }
   });
 }
 
@@ -324,7 +197,6 @@ function initYear(): void {
 }
 
 initNav();
-initEnquiryForm();
 initPhotoSlots();
 void initBgVideo({ section: ".hero", layer: ".hero-bg", video: "hero-bg-video.mp4", poster: "hero-bg-poster.jpg" })
   .then((shown) => (shown ? undefined : initHeroSlideshow()));

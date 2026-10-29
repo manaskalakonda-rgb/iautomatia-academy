@@ -403,40 +403,22 @@ code, .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; f
 .tl-phase::after { content: ""; flex: 1; height: 1px; background: var(--divider); }
 .tl-label { font-weight: 700; color: var(--fg); border: 1px solid var(--border); padding: 5px 14px; border-radius: 6px; font-size: 0.88rem; }
 
-/* ---------- 6. Enquiry: graphite form container on the off-white section ---------- */
+/* ---------- 6. Enquiry: graphite card holding the NocoDB form on the off-white section ---------- */
 .enquire-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .cta-lead { font-size: 1.15rem; font-weight: 700; color: var(--fg); }
 /* Enquiry copy: compact, two sizes only (heading + one text size for label, lead and list) */
 .enquire-copy h2 { font-size: clamp(1.35rem, 2vw, 1.6rem); max-width: 30ch; text-wrap: balance; }
 .enquire-copy .eyebrow, .enquire-copy .cta-lead, .enquire-copy .ticks { font-size: 0.95rem; }
 .enquiry-form {
-  position: relative; border-radius: var(--radius); padding: 30px;
+  position: relative; border-radius: var(--radius); overflow: hidden;
   border: 1px solid var(--color-graphite); border-top: 3px solid var(--color-orange);
   box-shadow: 0 18px 44px rgba(23, 25, 28, 0.25);
 }
-.field { margin-bottom: 16px; border: 0; padding: 0; min-width: 0; }
-.field label, .field legend { display: block; font-weight: 700; color: var(--fg); margin-bottom: 6px; font-size: 0.94rem; padding: 0; }
-.field input[type="text"], .field input[type="tel"], .field input[type="email"], .field select {
-  width: 100%; padding: 12px 14px; font-size: 1rem; font-family: inherit;
-  color: var(--fg); background: var(--color-surface-dark); border: 1px solid var(--color-steel); border-radius: 8px;
-}
-.field input:focus, .field select:focus { border-color: var(--color-orange); outline: none; box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.3); }
-.field select {
-  appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--color-steel) 50%), linear-gradient(135deg, var(--color-steel) 50%, transparent 50%);
-  background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat;
-}
-.field select option { background: var(--color-surface-dark); color: var(--color-offwhite); }
-.field input::placeholder { color: var(--color-steel); }
-.field input.invalid, .field select.invalid { border-color: var(--error); }
-.radio-row { display: flex; flex-wrap: wrap; gap: 20px; }
-.radio { display: flex !important; align-items: center; gap: 8px; font-weight: 500 !important; cursor: pointer; color: var(--fg-2); }
-.radio input { accent-color: var(--color-orange); width: 18px; height: 18px; }
-.error { color: var(--error); font-size: 0.85rem; margin: 4px 0 0; min-height: 1em; }
-.form-success { margin: 16px 0 0; padding: 12px 14px; border-radius: 8px; background: rgba(47, 179, 122, 0.14); border: 1px solid var(--success); color: var(--fg); }
-.form-success.form-error { background: rgba(255, 122, 122, 0.12); border-color: var(--error); }
-.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-button[disabled] { opacity: 0.6; cursor: progress; }
+/* NocoDB form (cross-origin, so it can't size itself): tall enough to show every field without inner scrolling */
+.enquiry-frame { display: block; width: 100%; height: 1060px; border: 0; background: var(--bg); }
+.enquiry-fallback { margin: 0; padding: 12px 20px; border-top: 1px solid var(--border); text-align: center; font-size: 0.88rem; color: var(--fg-2); }
+.enquiry-fallback a { color: var(--accent-text); font-weight: 700; text-decoration: none; white-space: nowrap; }
+.enquiry-fallback a:hover { text-decoration: underline; }
 
 /* ---------- FAQ ---------- */
 .faq details { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); margin-bottom: 12px; transition: border-color 0.2s; }
@@ -515,7 +497,6 @@ button[disabled] { opacity: 0.6; cursor: progress; }
 @media (max-width: 560px) {
   .tech-grid, .timeline, .footer-grid { grid-template-columns: 1fr; }
   .hero { padding: 48px 0 60px; }
-  .enquiry-form { padding: 22px; }
   .logo img { height: 36px; }
   .logo-text { padding-left: 10px; }
   .logo-text small { display: none; }
@@ -548,5 +529,3 @@ button[disabled] { opacity: 0.6; cursor: progress; }
   .spec-strip li { padding: 12px 14px; }
 }
 
-/* Monospace technical label on the form's submit button */
-.btn-mono-label { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; text-transform: uppercase; letter-spacing: 0.08em; }
