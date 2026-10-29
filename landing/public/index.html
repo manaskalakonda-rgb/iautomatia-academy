@@ -7,7 +7,10 @@
   <meta name="description" content="Build job-ready industrial automation skills in 12 weeks with hands-on training on real cobots and Siemens, Mitsubishi and Allen-Bradley PLCs in Hyderabad." />
   <link rel="icon" type="image/png" href="assets/mark.png" />
   <link rel="preload" href="assets/fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=20261001-9" />
+  <!-- Warm up the connections for the embedded NocoDB registration form (page on app., app files on cdn.) -->
+  <link rel="preconnect" href="https://app.nocodb.com" />
+  <link rel="preconnect" href="https://cdn.nocodb.com" crossorigin />
+  <link rel="stylesheet" href="styles.css?v=20261029-1" />
 </head>
 <body>
 
@@ -448,8 +451,10 @@
         </div>
 
         <!-- Registration form hosted on NocoDB, embedded here (frame-src in the CSP allows app.nocodb.com). -->
+        <!-- Loads eagerly (no loading="lazy"): NocoDB takes a few seconds to start, so it begins as soon as the page opens. -->
         <div class="enquiry-form enquiry-embed theme-dark">
-          <iframe class="enquiry-frame" src="https://app.nocodb.com/nc/form/5500795e-dd8f-4758-ae46-6c3625a4bdee?nc-theme=dark" title="iAutomatia Academy registration form" loading="lazy"></iframe>
+          <p class="enquiry-loading" aria-hidden="true">Loading registration form&hellip;</p>
+          <iframe class="enquiry-frame" src="https://app.nocodb.com/nc/form/5500795e-dd8f-4758-ae46-6c3625a4bdee?nc-theme=dark" title="iAutomatia Academy registration form"></iframe>
           <p class="enquiry-fallback">Form not loading? <a href="https://app.nocodb.com/nc/form/5500795e-dd8f-4758-ae46-6c3625a4bdee?nc-theme=light" target="_blank" rel="noopener">Open Registration Form &rarr;</a></p>
         </div>
       </div>
