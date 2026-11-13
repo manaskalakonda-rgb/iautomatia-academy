@@ -15,14 +15,19 @@ Only use photos you took yourself or have permission to use (e.g. JAKA's officia
 media kit with their written OK).
 
 HERO BACKGROUND VIDEO (behind the headline, takes priority over the slideshow)
-  landing/public/assets/hero-bg-video.mp4   looping, muted ambient video (shown dimmed under a dark overlay)
-  landing/public/assets/hero-bg-poster.jpg  still frame, shown while the video loads and instead of the
-                                            video on phones (<= 640 px), reduced motion and data saver
+  landing/public/assets/hero-bg-video.mp4         looping, muted ambient video (shown dimmed under a dark overlay)
+  landing/public/assets/hero-bg-video-mobile.mp4  lighter portrait cut played on phones (<= 640 px) instead
+  landing/public/assets/hero-bg-poster.jpg        still frame, shown while the video loads and instead of the
+                                                  video with reduced motion and data saver
   Keep the video short of title cards/logo screens, ~720p, no audio, under ~8 MB.
+  When you replace a video, remake its -mobile file (centre 406 x 720 crop, ~2 MB):
+    ffmpeg -i hero-bg-video.mp4 -vf "crop=406:720:(iw-406)/2:0" -an -c:v libx264 -profile:v main
+           -pix_fmt yuv420p -preset slow -crf 33 -movflags +faststart hero-bg-video-mobile.mp4
 
 LAB SECTION BACKGROUND VIDEO (behind "The same hardware you will find on the plant floor")
-  landing/public/assets/lab-bg-video.mp4    same rules as the hero video; only loads when the section
-  landing/public/assets/lab-bg-poster.jpg   scrolls near, and phones get the poster still instead
+  landing/public/assets/lab-bg-video.mp4         same rules as the hero video (including the -mobile cut);
+  landing/public/assets/lab-bg-video-mobile.mp4  only loads when the section scrolls near
+  landing/public/assets/lab-bg-poster.jpg
 
 HERO BACKGROUND SLIDESHOW (behind the headline, used when there is no hero-bg-video.mp4)
   hero-bg-1, hero-bg-2, hero-bg-3 ... (up to 8, numbered with no gaps)

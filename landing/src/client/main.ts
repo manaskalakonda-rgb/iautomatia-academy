@@ -99,18 +99,29 @@ function initPhotoSlots(): void {
 }
 
 // Section background video: the <template> inside the section's background layer, used when its
-// file is in assets/. Small screens, reduced motion and data saver get the poster still instead,
-// so they never download the video. `lazy` waits until the section is near the viewport.
-// Returns true if a background was set up.
+// file is in assets/. Small screens play the lighter portrait cut (`mobileVideo`) when it exists.
+// Reduced motion and data saver get the poster still instead, so they never download a video.
+// `lazy` waits until the section is near the viewport. Returns true if a background was set up.
 interface BgVideo {
   section: string;
   layer: string;
   video: string;
+  mobileVideo: string;
   poster: string;
   lazy?: boolean;
 }
 
-async function initBgVideo({ section, layer, video: file, poster, lazy = false }: BgVideo): Promise<boolean> {
+// Some browsers refuse autoplay at first (e.g. iOS before any interaction): start on the first tap or scroll.
+function playWhenAllowed(video: HTMLVideoElement): void {
+  const retry = (): void => {
+    void video.play().then(stop, () => undefined);
+  };
+  const events = ["touchstart", "scroll", "click"] as const;
+  const stop = (): void => events.forEach((type) => window.removeEventListener(type, retry));
+  video.play().catch(() => events.forEach((type) => window.addEventListener(type, retry, { passive: true })));
+}
+
+async function initBgVideo({ section, layer, video: file, mobileVideo, poster, lazy = false }: BgVideo): Promise<boolean> {
   const host = $<HTMLElement>(section);
   const bg = host ? $<HTMLElement>(layer, host) : null;
   const template = bg ? $<HTMLTemplateElement>("template", bg) : null;
@@ -120,10 +131,17 @@ async function initBgVideo({ section, layer, video: file, poster, lazy = false }
 
   const video = template.content.firstElementChild?.cloneNode(true);
   if (!(video instanceof HTMLVideoElement)) return false;
+  // A cloned <video> does not pick up the muted state from its attribute, and mobile browsers only autoplay muted, inline video.
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+  const source = $<HTMLSourceElement>("source", video);
+  if (source && media.includes(mobileVideo) && window.matchMedia?.("(max-width: 640px)").matches) {
+    source.src = source.src.replace(file, mobileVideo);
+  }
 
   const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-  const useStill =
-    window.matchMedia?.("(max-width: 640px), (prefers-reduced-motion: reduce)").matches || connection?.saveData === true;
+  const useStill = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || connection?.saveData === true;
 
   let el: HTMLElement = video;
   if (useStill) {
@@ -136,7 +154,7 @@ async function initBgVideo({ section, layer, video: file, poster, lazy = false }
   }
   const show = (): void => {
     bg.appendChild(el);
-    if (el instanceof HTMLVideoElement) void el.play().catch(() => undefined); // autoplay can be refused; the poster stays visible
+    if (el instanceof HTMLVideoElement) playWhenAllowed(el); // until it plays, the poster stays visible
   };
 
   host.classList.add("has-video");
@@ -198,7 +216,7 @@ function initYear(): void {
 
 initNav();
 initPhotoSlots();
-void initBgVideo({ section: ".hero", layer: ".hero-bg", video: "hero-bg-video.mp4", poster: "hero-bg-poster.jpg" })
+void initBgVideo({ section: ".hero", layer: ".hero-bg", video: "hero-bg-video.mp4", mobileVideo: "hero-bg-video-mobile.mp4", poster: "hero-bg-poster.jpg" })
   .then((shown) => (shown ? undefined : initHeroSlideshow()));
-void initBgVideo({ section: "#lab", layer: ".section-bg", video: "lab-bg-video.mp4", poster: "lab-bg-poster.jpg", lazy: true });
+void initBgVideo({ section: "#lab", layer: ".section-bg", video: "lab-bg-video.mp4", mobileVideo: "lab-bg-video-mobile.mp4", poster: "lab-bg-poster.jpg", lazy: true });
 initYear();
